@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 import InquiryForm from "@/components/InquiryForm";
 import { checkupPackages } from "@/data/checkups";
 import { img } from "@/utils/format";
-import { useT } from "@/i18n/LanguageContext";
+import { useT } from "@/i18n/language-hooks";
 
 const heroBg = img(
   "Modern luxury medical examination suite, dark wood and warm gold accents, panoramic window, photorealistic",

@@ -6,7 +6,7 @@ export const LOCALES: { code: Locale; label: string; short: string; flag: string
   { code: "ja", label: "日本語", short: "JA", flag: "🇯🇵" },
 ];
 
-export const DEFAULT_LOCALE: Locale = "zh-CN";
+export const DEFAULT_LOCALE: Locale = "en";
 
 export type Dictionary = {
   // Common
@@ -33,6 +33,15 @@ export type Dictionary = {
     subscribeCta: string;
     rights: string;
     motto: string;
+    servicesLabel: string;
+    services: { routes: string; checkup: string; tcm: string; about: string };
+    resourcesLabel: string;
+    resources: { visa: string; hospitals: string; stories: string; newsroom: string };
+    newsletterLabel: string;
+    newsletterDesc: string;
+    privacy: string;
+    terms: string;
+    hipaa: string;
   };
   // Form
   form: {
@@ -49,37 +58,47 @@ export type Dictionary = {
     anotherBtn: string;
     requiredHint: string;
   };
-  // Home
+  // Home (v2 Medora-style)
   home: {
-    eyebrow: string;
-    titleA: string;
-    titleB: string;
-    subtitle: string;
-    coord: string;
-    seasons: string[];
-    partnerEyebrow: string;
-    inquiryEyebrow: string;
-    inquiryTitle: string;
-    inquirySubtitle: string;
-    perks: string[];
-    statLabels: string[];
-    pillars: { eyebrow: string; title: string; en: string; desc: string }[];
-    editorialEyebrow: string;
-    editorialTitle: string;
-    editorialP1: string;
-    editorialP2: string;
+    heroEyebrow: string;
+    heroTitle: string;
+    heroSub: string;
+    heroBtnConsult: string;
+    heroBtnSearch: string;
+    searchSpecialty: string;
+    searchDestination: string;
+    searchBtn: string;
     featuredEyebrow: string;
     featuredTitle: string;
-    featuredCta: string;
-    tcmEyebrow: string;
-    tcmTitle: string;
-    tcmDesc: string;
+    featuredDesc: string;
+    stats: { value: string; label: string }[];
+    pillarsEyebrow: string;
+    pillarsTitle: string;
+    pillarsSub: string;
+    pillars: { title: string; desc: string }[];
+    ctaBannerEyebrow: string;
+    ctaBannerTitle: string;
+    ctaBannerSub: string;
+    ctaBannerBtn: string;
+    networkEyebrow: string;
+    networkTitle: string;
+    networkViewAll: string;
+    hospitals: { city: string; tag: string; beds: string }[];
+    processEyebrow: string;
+    processTitle: string;
+    processSteps: { title: string; desc: string }[];
     voicesEyebrow: string;
     voicesTitle: string;
-    voicesSub: string;
-    partnersEyebrow: string;
+    voices: { name: string; country: string; text: string }[];
+    faqEyebrow: string;
+    faqTitle: string;
+    faqs: { q: string; a: string }[];
+    finalEyebrow: string;
+    finalTitle: string;
+    finalSub: string;
+    finalBtn: string;
   };
-  // Routes page
+  // Routes page (v1, used by RouteDetail)
   routesPage: {
     eyebrow: string;
     titleA: string;
@@ -109,6 +128,36 @@ export type Dictionary = {
     fieldHighlight: string;
     clearCompare: string;
     consultAdvisor: string;
+    tailorEyebrow: string;
+    tailorTitle: string;
+    tailorSub: string;
+  };
+  // Routes page (v2)
+  routesPageV2: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    filterLabel: string;
+    allThemes: string;
+    themes: Record<"hotSpring" | "gorge" | "tcm" | "trail" | "oldTown" | "aesthetic", string>;
+    dayBuckets: { all: string; short: string; mid: string; long: string };
+    count: (n: number) => string;
+    compare: (n: number) => string;
+    daysUnit: string;
+    nightsUnit: string;
+    from: string;
+    bestLabel: string;
+    noResult: string;
+    compareEyebrow: string;
+    compareTitle: string;
+    clear: string;
+    consultAdvisor: string;
+    fieldLabel: string;
+    fieldDuration: string;
+    fieldIntensity: string;
+    fieldSeason: string;
+    fieldPrice: string;
+    fieldHighlight: string;
     tailorEyebrow: string;
     tailorTitle: string;
     tailorSub: string;
@@ -219,7 +268,7 @@ export type Dictionary = {
 
 const zh: Dictionary = {
   nav: { home: "首页", routes: "康养线路", checkup: "高端体检", tcm: "中医药", about: "关于", book: "预约咨询" },
-  brand: { tagline: "渝见·康养", subtag: "Chongqing Wellness" },
+  brand: { tagline: "渝见康养 · Yujian Wellness", subtag: "医疗旅游 · 中国" },
   cta: {
     viewRoutes: "查看线路",
     bookNow: "立即预约",
@@ -240,6 +289,15 @@ const zh: Dictionary = {
     subscribeCta: "订阅",
     rights: "渝见康养 · 重庆医疗旅游",
     motto: "山 · 雾 · 汤 · 药 · 城",
+    servicesLabel: "服务",
+    services: { routes: "康养线路", checkup: "高端体检", tcm: "中医药", about: "关于我们" },
+    resourcesLabel: "资源",
+    resources: { visa: "签证指南", hospitals: "医院网络", stories: "用户故事", newsroom: "新闻中心" },
+    newsletterLabel: "邮件订阅",
+    newsletterDesc: "每月一封：资深顾问带来的中国医疗旅行手记。",
+    privacy: "隐私政策",
+    terms: "服务条款",
+    hipaa: "HIPAA 声明",
   },
   form: {
     name: "姓名",
@@ -257,39 +315,112 @@ const zh: Dictionary = {
     requiredHint: "*",
   },
   home: {
-    eyebrow: "Chongqing · Medical Tourism",
-    titleA: "渝见",
-    titleB: "康养",
-    subtitle:
-      "把重庆的山、雾、汤、药、城，凝缩进一次疗愈之旅。看 · 养 · 游 · 疗，尽在此间。",
-    coord: "29.56° N · 106.55° E",
-    seasons: ["立春", "夏至", "立秋", "冬至"],
-    partnerEyebrow: "Trusted partners",
-    inquiryEyebrow: "Begin your journey",
-    inquiryTitle: "告诉我们，您想如何被疗愈。",
-    inquirySubtitle:
-      "留下您的信息，专属健康顾问将在 24 小时内回访，为您定制从体检、中医到线路的完整方案。",
-    perks: ["1v1 健康顾问全程陪同", "三甲医院绿色通道", "多语种服务（中文 / EN / 日）"],
-    statLabels: ["合作三甲医院", "累计服务旅客", "康养主题线路", "客户满意度"],
-    pillars: [
-      { eyebrow: "Pillar · 01", title: "康养线路", en: "Wellness Itineraries", desc: "温泉、峡江、古镇、医美 — 把重庆的山水人文编织成可一站式预定的康养旅程。" },
-      { eyebrow: "Pillar · 02", title: "高端体检", en: "Premium Health Screening", desc: "与重庆顶级三甲医院深度合作，4 档套餐满足从基础到至臻皇室的全场景需求。" },
-      { eyebrow: "Pillar · 03", title: "中医药", en: "Traditional Chinese Medicine", desc: "针灸、推拿、艾灸、药浴、膏方 — 与国家级名中医同行，体验千年岐黄之术。" },
+    heroEyebrow: "医疗旅游 · 中国",
+    heroTitle: "一站式中国医疗旅行管家",
+    heroSub: "从首次视频会诊到回国随访，一段全程托管的疗愈之旅。高端西医与千年中医药，由专属健康顾问为您一站缝合。",
+    heroBtnConsult: "预约咨询",
+    heroBtnSearch: "搜索治疗",
+    searchSpecialty: "科室",
+    searchDestination: "目的地",
+    searchBtn: "搜索",
+    featuredEyebrow: "Featured",
+    featuredTitle: "三甲医院网络",
+    featuredDesc: "200+ 三甲公立医院，由国际医疗委员会严格筛选。",
+    stats: [
+      { value: "600+", label: "可治疗病种" },
+      { value: "1,600+", label: "已开展手术术式" },
+      { value: "200+", label: "合作三甲医院" },
+      { value: "24/7", label: "全程管家服务" },
     ],
-    editorialEyebrow: "The Healing",
-    editorialTitle: "不是旅行的疗愈，是疗愈的旅行。",
-    editorialP1: "在缙云山脚下的千年古汤中入夜，被草本药香与夜雾轻轻托起；清晨由太极老师带领晨课，午后让名中医为你把脉辨证。",
-    editorialP2: "渝见康养不把「疗愈」当作套餐加项，而把整段旅程重新定义 — 把它当作你身体的第四次呼吸。",
-    featuredEyebrow: "Featured Itineraries",
-    featuredTitle: "推荐康养线路",
-    featuredCta: "查看全部 36 条",
-    tcmEyebrow: "Heritage · 中医药",
-    tcmTitle: "千年岐黄，在山城相遇。",
-    tcmDesc: "与国家级名中医同行，亲制膏方，体验针灸、推拿、艾灸、药浴五大传统外治法。渝见康养与重庆市中医院、西南医院中医科深度合作，组建名医顾问团。",
-    voicesEyebrow: "Voices",
-    voicesTitle: "来自旅客的手记。",
-    voicesSub: "他们来自上海、东京、柏林、深圳……带着不同的身体与期待，最后带走的是一段被重新校准的呼吸。",
-    partnersEyebrow: "Trusted partners",
+    pillarsEyebrow: "服务四大支柱",
+    pillarsTitle: "一段完整的旅程，而非一次交易",
+    pillarsSub: "四项一体化服务，从您的第一次咨询一直延续到长期随访。",
+    pillars: [
+      { title: "远程会诊", desc: "足不出户，与中国顶级专家通过加密视频问诊对话。" },
+      { title: "医院网络", desc: "200+ 三甲公立医院与国际医疗中心，由我方医疗委员会严格筛选。" },
+      { title: "签证与出行", desc: "端到端医疗签证支持、机场专车接送、私人翻译全程陪同。" },
+      { title: "传统中医药", desc: "现代医学与千年中医并行：针灸、推拿、膏方、调养。" },
+    ],
+    ctaBannerEyebrow: "定制方案",
+    ctaBannerTitle: "为您定制医疗旅行方案",
+    ctaBannerSub: "告诉我们您的身体状况、时间安排与偏好 — 资深顾问将在 24 小时内与您联系。",
+    ctaBannerBtn: "开始规划",
+    networkEyebrow: "医院网络",
+    networkTitle: "覆盖全国的 200+ 合作三甲医院",
+    networkViewAll: "查看全部医院",
+    hospitals: [
+      { city: "重庆", tag: "三甲公立", beds: "3,200" },
+      { city: "北京", tag: "国家医学中心", beds: "2,800" },
+      { city: "上海", tag: "国际医疗", beds: "2,500" },
+      { city: "广州", tag: "研究型医院", beds: "2,200" },
+      { city: "成都", tag: "西部医疗枢纽", beds: "1,900" },
+      { city: "深圳", tag: "三甲综合", beds: "1,600" },
+    ],
+    processEyebrow: "服务流程",
+    processTitle: "从咨询到康复，六步走完",
+    processSteps: [
+      { title: "远程会诊", desc: "与专家视频问诊" },
+      { title: "方案设计", desc: "个性化治疗方案" },
+      { title: "签证办理", desc: "邀请函与签证" },
+      { title: "出行接待", desc: "专车机场接送" },
+      { title: "入院治疗", desc: "三甲医院住院" },
+      { title: "长期随访", desc: "12 个月远程关怀" },
+    ],
+    voicesEyebrow: "用户声音",
+    voicesTitle: "旅客怎么说",
+    voices: [
+      { name: "来自美国的旅客", country: "美国", text: "我来做一项复杂的心脏手术。管家团队翻译了每一份病历，安排了每一次门诊，全程陪伴。在异国医院，我从未感到孤单。" },
+      { name: "来自德国的旅客", country: "德国", text: "我把髋关节置换与三周山区中医康复合在一起做。西方医学的精准与东方疗愈的从容，是我在任何其他地方都找不到的组合。" },
+      { name: "来自日本的旅客", country: "日本", text: "我们一家四口来做全面体检。套餐里包含国家名中医把脉 — 这种深度的关怀，是我在东京从未体验过的。" },
+    ],
+    faqEyebrow: "常见问题",
+    faqTitle: "您可能想了解的",
+    faqs: [
+      { q: "签证流程一般需要多久？", a: "大多数医疗签证在 5-10 个工作日内签出。我方团队会为您准备邀请函、医院确认函与全套支持材料。" },
+      { q: "你们能翻译病历与报告吗？", a: "可以。每一份报告都由具备医学背景的双语翻译师翻译，并由您的主诊医生签字确认。" },
+      { q: "家属可以陪同吗？", a: "当然可以。我们为陪同家属安排住宿、餐食与专车接送，并在合作医院提供 VIP 单人病房。" },
+      { q: "回国后还能继续随访吗？", a: "我们提供 12 个月的远程随访：定期视频复诊、药品配送、与您主诊专家的直通渠道。" },
+    ],
+    finalEyebrow: "开启您的旅程",
+    finalTitle: "告诉我们，您想被如何照护。",
+    finalSub: "资深顾问将在 24 小时内与您联系，定制从首次视频问诊到 12 个月长期随访的完整方案。",
+    finalBtn: "预约咨询",
+  },
+  routesPageV2: {
+    eyebrow: "康养线路",
+    title: "精选中国康养疗愈之旅",
+    subtitle: "六大主题线路 — 融合传统中医、高端体检与定制旅行。每条线路都是全程私享、全程陪同。",
+    filterLabel: "筛选",
+    allThemes: "全部主题",
+    themes: {
+      hotSpring: "温泉疗愈",
+      gorge: "江峡养心",
+      tcm: "中医世家",
+      trail: "古道徒步",
+      oldTown: "古镇静修",
+      aesthetic: "都市医美",
+    },
+    dayBuckets: { all: "全部天数", short: "1-3 天", mid: "4-5 天", long: "6 天+" },
+    count: (n) => `${n} 条线路可约`,
+    compare: (n) => `对比 (${n})`,
+    daysUnit: "天",
+    nightsUnit: "晚",
+    from: "起价",
+    bestLabel: "最佳",
+    noResult: "没有匹配的线路，换个筛选试试。",
+    compareEyebrow: "Compare",
+    compareTitle: "线路对比",
+    clear: "清空",
+    consultAdvisor: "咨询顾问",
+    fieldLabel: "项目",
+    fieldDuration: "时长",
+    fieldIntensity: "强度",
+    fieldSeason: "最佳季节",
+    fieldPrice: "起价",
+    fieldHighlight: "亮点",
+    tailorEyebrow: "为您定制",
+    tailorTitle: "没有合适的？我们为您定制一条。",
+    tailorSub: "告诉我们出行日期、人数与偏好 — 顾问将在 24 小时内提供 2-3 套定制方案。",
   },
   routesPage: {
     eyebrow: "Wellness Itineraries",
@@ -424,7 +555,7 @@ const zh: Dictionary = {
 
 const en: Dictionary = {
   nav: { home: "Home", routes: "Itineraries", checkup: "Health Screening", tcm: "TCM", about: "About", book: "Book" },
-  brand: { tagline: "Yujian · Wellness", subtag: "Chongqing Medical Tourism" },
+  brand: { tagline: "Yujian Wellness", subtag: "Medical Tourism · China" },
   cta: {
     viewRoutes: "View Itineraries",
     bookNow: "Book Now",
@@ -445,6 +576,15 @@ const en: Dictionary = {
     subscribeCta: "Join",
     rights: "Yujian Wellness · Chongqing Medical Tourism",
     motto: "Mountain · Mist · Spring · Herbs · City",
+    servicesLabel: "Services",
+    services: { routes: "Itineraries", checkup: "Health Screening", tcm: "TCM", about: "About" },
+    resourcesLabel: "Resources",
+    resources: { visa: "Visa Guide", hospitals: "Hospital Network", stories: "Patient Stories", newsroom: "Newsroom" },
+    newsletterLabel: "Newsletter",
+    newsletterDesc: "Monthly: a senior advisor's note on medical travel in China.",
+    privacy: "Privacy",
+    terms: "Terms",
+    hipaa: "HIPAA Notice",
   },
   form: {
     name: "Name",
@@ -461,38 +601,112 @@ const en: Dictionary = {
     requiredHint: "*",
   },
   home: {
-    eyebrow: "Chongqing · Medical Tourism",
-    titleA: "Meet",
-    titleB: "Chongqing",
-    subtitle:
-      "Compress the mountain, the mist, the spring, the herbs and the city into a single healing journey. See · Nurture · Explore · Heal.",
-    coord: "29.56° N · 106.55° E",
-    seasons: ["SPRING", "SUMMER", "AUTUMN", "WINTER"],
-    partnerEyebrow: "Trusted partners",
-    inquiryEyebrow: "Begin your journey",
-    inquiryTitle: "Tell us how you'd like to be healed.",
-    inquirySubtitle: "Leave your details — a dedicated concierge will reply within 24 hours with a complete plan across screening, TCM and itineraries.",
-    perks: ["1-on-1 concierge", "Tier-A hospital green channel", "Multilingual (CN / EN / JP)"],
-    statLabels: ["Partner hospitals", "Guests served", "Wellness itineraries", "Guest satisfaction"],
-    pillars: [
-      { eyebrow: "Pillar · 01", title: "Itineraries", en: "Wellness Itineraries", desc: "Hot springs, gorges, ancient towns, aesthetics — Chongqing's landscapes woven into bookable wellness journeys." },
-      { eyebrow: "Pillar · 02", title: "Health Screening", en: "Premium Health Screening", desc: "Deep partnerships with Chongqing's top tier-A hospitals — four packages from essential to imperial." },
-      { eyebrow: "Pillar · 03", title: "TCM", en: "Traditional Chinese Medicine", desc: "Acupuncture, tuina, moxibustion, herbal bath, gaofang — practice millennia-old healing with national masters." },
+    heroEyebrow: "Medical Tourism · China",
+    heroTitle: "Your all-in-one concierge for medical travel in China",
+    heroSub: "A fully-managed, end-to-end journey — from your first video consult to follow-up at home. Premium Chinese medicine meets international-grade care, all stitched together by a dedicated concierge team.",
+    heroBtnConsult: "Request a Consult",
+    heroBtnSearch: "Search Treatment",
+    searchSpecialty: "Specialty",
+    searchDestination: "Destination",
+    searchBtn: "Search",
+    featuredEyebrow: "Featured",
+    featuredTitle: "Tier-A Hospital Network",
+    featuredDesc: "200+ public hospitals, vetted by an international medical board.",
+    stats: [
+      { value: "600+", label: "Disease types treated" },
+      { value: "1,600+", label: "Surgical procedures" },
+      { value: "200+", label: "Partner hospitals" },
+      { value: "24/7", label: "Concierge support" },
     ],
-    editorialEyebrow: "The Healing",
-    editorialTitle: "Not a healing trip — a trip that heals.",
-    editorialP1: "Soak in thousand-year-old springs at the foot of Jinyun Mountain, lifted by herbal mist at night. Practice tai chi at dawn, and let a master physician read your pulse at noon.",
-    editorialP2: "Yujian does not bolt 'healing' onto an itinerary — it re-defines the journey itself as the fourth breath of your body.",
-    featuredEyebrow: "Featured Itineraries",
-    featuredTitle: "Recommended Itineraries",
-    featuredCta: "View all 36",
-    tcmEyebrow: "Heritage · TCM",
-    tcmTitle: "Millennia of wisdom, awakened in the mountain city.",
-    tcmDesc: "Walk with national-grade TCM masters, hand-craft your own gaofang, and experience acupuncture, tuina, moxibustion and herbal bath.",
+    pillarsEyebrow: "Our Service Pillars",
+    pillarsTitle: "A complete journey, not a single transaction",
+    pillarsSub: "Four integrated services that follow you from your first question to your last follow-up — and beyond.",
+    pillars: [
+      { title: "Online Consultation", desc: "Connect with China's top specialists via encrypted video from anywhere in the world." },
+      { title: "Hospital Network", desc: "200+ tier-A public hospitals and international medical centers, all vetted by our medical board." },
+      { title: "Travel & Visa", desc: "End-to-end medical visa support, airport pickup, private transport and interpreter escort." },
+      { title: "Heritage TCM", desc: "Pair modern medicine with millennia-old Chinese therapies: acupuncture, tuina, gaofang and more." },
+    ],
+    ctaBannerEyebrow: "Custom Plan",
+    ctaBannerTitle: "Design my medical travel plan",
+    ctaBannerSub: "Share your condition, your timeline and your preferences. A senior advisor will reach out within 24 hours.",
+    ctaBannerBtn: "Start Planning",
+    networkEyebrow: "Our Network",
+    networkTitle: "200+ partner hospitals across China",
+    networkViewAll: "View all hospitals",
+    hospitals: [
+      { city: "Chongqing", tag: "Tier-A Public", beds: "3,200" },
+      { city: "Beijing", tag: "National Center", beds: "2,800" },
+      { city: "Shanghai", tag: "International", beds: "2,500" },
+      { city: "Guangzhou", tag: "Research", beds: "2,200" },
+      { city: "Chengdu", tag: "Western Hub", beds: "1,900" },
+      { city: "Shenzhen", tag: "Tier-A", beds: "1,600" },
+    ],
+    processEyebrow: "How It Works",
+    processTitle: "Six steps from inquiry to recovery",
+    processSteps: [
+      { title: "Online consult", desc: "Video call with a specialist" },
+      { title: "Plan", desc: "Personalized treatment plan" },
+      { title: "Visa", desc: "Invitation letter & visa" },
+      { title: "Travel", desc: "Airport pickup & escort" },
+      { title: "Treat", desc: "Hospital admission" },
+      { title: "Follow-up", desc: "12-month remote care" },
+    ],
     voicesEyebrow: "Voices",
-    voicesTitle: "Notes from our guests.",
-    voicesSub: "From Shanghai, Tokyo, Berlin, Shenzhen — they came with different bodies and expectations, and left with a recalibrated breath.",
-    partnersEyebrow: "Trusted partners",
+    voicesTitle: "What our guests say",
+    voices: [
+      { name: "Visitor from the U.S.", country: "United States", text: "I came for a complex cardiac procedure. The concierge team translated every medical report, scheduled every appointment, and was at my side throughout. I never felt alone in a foreign hospital." },
+      { name: "Visitor from Germany", country: "Germany", text: "I combined a hip replacement with three weeks of TCM recovery in the mountains. The integration of Western precision and Eastern healing is something I could not find anywhere else." },
+      { name: "Visitor from Japan", country: "Japan", text: "Our family of four came for full health screenings. The package included a master TCM physician's pulse reading — a level of care I had never experienced in Tokyo." },
+    ],
+    faqEyebrow: "FAQ",
+    faqTitle: "Frequently asked questions",
+    faqs: [
+      { q: "How long does the visa process take?", a: "Most medical visas are issued within 5-10 business days. Our team prepares all invitation letters, hospital confirmation and supporting documents on your behalf." },
+      { q: "Do you provide translation of medical reports?", a: "Yes. Every report is translated by a medical-certified bilingual translator and countersigned by your attending physician." },
+      { q: "Can a family member accompany the patient?", a: "Absolutely. We arrange accommodation, transport and meals for accompanying family members, and a private family room is available at most partner hospitals." },
+      { q: "What if I need follow-up care after returning home?", a: "We provide a 12-month remote follow-up: scheduled video consultations, prescription delivery and a direct line to your specialist." },
+    ],
+    finalEyebrow: "Begin Your Journey",
+    finalTitle: "Tell us how you'd like to be cared for.",
+    finalSub: "A senior advisor will reach out within 24 hours to design a complete plan — from your first video consult to a 12-month follow-up.",
+    finalBtn: "Request a Consult",
+  },
+  routesPageV2: {
+    eyebrow: "Wellness Itineraries",
+    title: "Curated healing journeys across China",
+    subtitle: "Six signature itineraries blending traditional Chinese medicine, premium screening and curated travel. Each is fully private, fully escorted.",
+    filterLabel: "Filter",
+    allThemes: "All themes",
+    themes: {
+      hotSpring: "Hot Spring",
+      gorge: "River Gorge",
+      tcm: "TCM Heritage",
+      trail: "Ancient Trail",
+      oldTown: "Old Town",
+      aesthetic: "Urban Aesthetic",
+    },
+    dayBuckets: { all: "All", short: "1–3 days", mid: "4–5 days", long: "6+ days" },
+    count: (n) => `${n} itinerary available`,
+    compare: (n) => `Compare (${n})`,
+    daysUnit: "d",
+    nightsUnit: "n",
+    from: "from",
+    bestLabel: "Best",
+    noResult: "No itineraries match your filters.",
+    compareEyebrow: "Compare",
+    compareTitle: "Itinerary comparison",
+    clear: "Clear",
+    consultAdvisor: "Consult an advisor",
+    fieldLabel: "Field",
+    fieldDuration: "Duration",
+    fieldIntensity: "Intensity",
+    fieldSeason: "Best season",
+    fieldPrice: "From",
+    fieldHighlight: "Highlight",
+    tailorEyebrow: "Custom Plan",
+    tailorTitle: "Don't see your fit? Tailor your own.",
+    tailorSub: "Share your goals, timeline and preferences. A senior advisor will design a fully-custom plan and reach out within 24 hours.",
   },
   routesPage: {
     eyebrow: "Wellness Itineraries",
@@ -627,7 +841,7 @@ const en: Dictionary = {
 
 const ja: Dictionary = {
   nav: { home: "ホーム", routes: "養生コース", checkup: "健康診断", tcm: "中医", about: "ブランド", book: "ご予約" },
-  brand: { tagline: "渝見·康養", subtag: "重慶メディカルツーリズム" },
+  brand: { tagline: "渝見康養 · Yujian Wellness", subtag: "医療観光 · 中国" },
   cta: {
     viewRoutes: "コースを見る",
     bookNow: "今すぐ予約",
@@ -648,6 +862,15 @@ const ja: Dictionary = {
     subscribeCta: "登録",
     rights: "渝見康養 · 重慶メディカルツーリズム",
     motto: "山 · 霧 · 湯 · 薬 · 街",
+    servicesLabel: "サービス",
+    services: { routes: "養生コース", checkup: "健康診断", tcm: "中医", about: "ブランドについて" },
+    resourcesLabel: "リソース",
+    resources: { visa: "ビザガイド", hospitals: "病院ネットワーク", stories: "お客様の声", newsroom: "ニュースルーム" },
+    newsletterLabel: "ニュースレター",
+    newsletterDesc: "毎月一通：シニアアドバイザーによる中国医療旅行のメモ。",
+    privacy: "プライバシー",
+    terms: "利用規約",
+    hipaa: "HIPAA 通知",
   },
   form: {
     name: "お名前",
@@ -664,38 +887,112 @@ const ja: Dictionary = {
     requiredHint: "*",
   },
   home: {
-    eyebrow: "Chongqing · Medical Tourism",
-    titleA: "渝見",
-    titleB: "康養",
-    subtitle:
-      "重慶の山、霧、湯、薬、街を一回の養生旅に。観る · 養う · 遊ぶ · 癒す、ここにすべて。",
-    coord: "29.56° N · 106.55° E",
-    seasons: ["立春", "夏至", "立秋", "冬至"],
-    partnerEyebrow: "Trusted partners",
-    inquiryEyebrow: "Begin your journey",
-    inquiryTitle: "どのように癒されたいか、お聞かせください。",
-    inquirySubtitle: "情報をお残しいただければ、24時間以内に専属コンシェルジュより、健康診断・中医・コースの総合プランをご提案します。",
-    perks: ["1対1 専属コンシェルジュ", "三甲病院グリーン通道", "多言語対応（中文 / EN / 日）"],
-    statLabels: ["提携三甲病院", "累計サービス", "養生コース", "顧客満足度"],
-    pillars: [
-      { eyebrow: "Pillar · 01", title: "養生コース", en: "Wellness Itineraries", desc: "温泉・峡谷・古镇・医美 — 重慶の山水と人文を、予約可能な養生の旅へ。" },
-      { eyebrow: "Pillar · 02", title: "健康診断", en: "Premium Health Screening", desc: "重慶トップ三甲病院と連携。基礎から最上級の皇室プランまで4段階。" },
-      { eyebrow: "Pillar · 03", title: "中医", en: "Traditional Chinese Medicine", desc: "針灸・推拿・艾灸・薬浴・膏方 — 国家級名中医と歩く、千年の中医学。" },
+    heroEyebrow: "医療観光 · 中国",
+    heroTitle: "中国での医療旅行を、ワンストップで。",
+    heroSub: "初回のビデオ問診から帰国後のフォローまで、すべてを専属コンシェルジュが寄り添う旅路へ。西洋医療の精度と、千年の中医学をひとつに。",
+    heroBtnConsult: "相談する",
+    heroBtnSearch: "治療を検索",
+    searchSpecialty: "診療科目",
+    searchDestination: "目的地",
+    searchBtn: "検索",
+    featuredEyebrow: "Featured",
+    featuredTitle: "三甲病院ネットワーク",
+    featuredDesc: "200超の公立三甲病院を、国際医療委員会が厳選。",
+    stats: [
+      { value: "600+", label: "対応疾患" },
+      { value: "1,600+", label: "実施術式" },
+      { value: "200+", label: "提携三甲病院" },
+      { value: "24/7", label: "専属コンシェルジュ" },
     ],
-    editorialEyebrow: "The Healing",
-    editorialTitle: "旅を癒すのではなく、旅が癒す。",
-    editorialP1: "縉雲山麓、千年の古湯で夜を迎え、漢方の香りと夜霧に抱かれる。明け方に太極、午後に名中医が脈を取る。",
-    editorialP2: "渝見康養は「癒し」をオプションにしません。旅そのものを、身体の四度目の呼吸として再定義します。",
-    featuredEyebrow: "Featured Itineraries",
-    featuredTitle: "おすすめコース",
-    featuredCta: "全36コースを見る",
-    tcmEyebrow: "Heritage · TCM",
-    tcmTitle: "千年の岐黄、山の街で目覚める。",
-    tcmDesc: "国家級名中医と歩き、自家製膏方、針灸・推拿・艾灸・薬浴の五大外治法を体験。",
-    voicesEyebrow: "Voices",
-    voicesTitle: "お客様の声。",
-    voicesSub: "上海、東京、ベルリン、深圳から — 異なる身体と期待を持って来られたお客様が、再調整された呼吸を持ち帰ります。",
-    partnersEyebrow: "Trusted partners",
+    pillarsEyebrow: "4つのサービス柱",
+    pillarsTitle: "一回きりの取引ではなく、ひとつの旅路。",
+    pillarsSub: "初めてのお問い合わせから長期フォローまで、4つの統合サービスが伴走します。",
+    pillars: [
+      { title: "オンライン問診", desc: "世界中どこからでも、暗号化ビデオで中国のトップ専門医とつながります。" },
+      { title: "病院ネットワーク", desc: "医療委員会が厳選した200超の三甲公立病院と国際医療センター。" },
+      { title: "ビザと渡航", desc: "医療ビザ申請・空港送迎・専用車・通訳付き添いをワンストップで。" },
+      { title: "伝承中医学", desc: "現代医療と千年の中医学を融合：針灸・推拿・膏方・養生。" },
+    ],
+    ctaBannerEyebrow: "カスタムプラン",
+    ctaBannerTitle: "あなたの医療旅行プランを設計します",
+    ctaBannerSub: "症状・スケジュール・ご希望をお聞かせください。24時間以内にシニアアドバイザーよりご連絡します。",
+    ctaBannerBtn: "プラン設計を始める",
+    networkEyebrow: "提携ネットワーク",
+    networkTitle: "中国全土200超の提携三甲病院",
+    networkViewAll: "すべての病院を見る",
+    hospitals: [
+      { city: "重慶", tag: "三甲公立", beds: "3,200" },
+      { city: "北京", tag: "国家医療センター", beds: "2,800" },
+      { city: "上海", tag: "国際医療", beds: "2,500" },
+      { city: "広州", tag: "研究型病院", beds: "2,200" },
+      { city: "成都", tag: "西部医療拠点", beds: "1,900" },
+      { city: "深圳", tag: "三甲総合", beds: "1,600" },
+    ],
+    processEyebrow: "サービスフロー",
+    processTitle: "お問い合わせから回復まで、6ステップ。",
+    processSteps: [
+      { title: "オンライン問診", desc: "専門医とビデオ通話" },
+      { title: "プラン設計", desc: "個別治療計画" },
+      { title: "ビザ取得", desc: "招請状とビザ" },
+      { title: "渡航・送迎", desc: "空港送迎と付き添い" },
+      { title: "入院・治療", desc: "三甲病院での入院" },
+      { title: "長期フォロー", desc: "12ヶ月の遠隔ケア" },
+    ],
+    voicesEyebrow: "お客様の声",
+    voicesTitle: "ゲストからのメッセージ",
+    voices: [
+      { name: "米国からのゲスト", country: "アメリカ", text: "複雑な心臓手術を受けに来ました。コンシェルジュチームが全ての医療書類を翻訳し、予約を手配し、常にそばにいてくれました。異国の病院でも孤独を感じませんでした。" },
+      { name: "ドイツからのゲスト", country: "ドイツ", text: "股関節置換と山岳地での3週間の中医回復を組み合わせました。西洋の精密さと東洋の癒しを両立できる場所は、他には見つかりません。" },
+      { name: "日本からのゲスト", country: "日本", text: "家族4人で総合健康診断を受けました。コースには国家名中医の脈診も含まれており、東京では経験したことのない手厚いものでした。" },
+    ],
+    faqEyebrow: "よくあるご質問",
+    faqTitle: "ご不明な点にお答えします",
+    faqs: [
+      { q: "ビザ手続きにはどのくらい時間がかかりますか？", a: "ほとんどの医療ビザは5〜10営業日で発給されます。招請状・病院確認書一式は当方にてご用意します。" },
+      { q: "医療文書や報告書の翻訳もお願いできますか？", a: "はい。医療資格を持つバイリンガル翻訳者が翻訳し、主治医がクロスサインします。" },
+      { q: "家族が付き添うことはできますか？", a: "もちろんです。ご家族用の宿泊・食事・専用車を手配し、提携病院では個室をご利用いただけます。" },
+      { q: "帰国後のフォローはありますか？", a: "12ヶ月の遠隔フォローをご用意。定期ビデオ再診、お薬配送、主治医直通の窓口をご利用いただけます。" },
+    ],
+    finalEyebrow: "旅路を始める",
+    finalTitle: "どのように過ごされたいか、お聞かせください。",
+    finalSub: "シニアアドバイザーが24時間以内にご連絡し、初回のビデオ問診から12ヶ月の長期フォローまで、総合プランを設計します。",
+    finalBtn: "相談する",
+  },
+  routesPageV2: {
+    eyebrow: "養生コース",
+    title: "中国全土の厳選 癒しの旅路",
+    subtitle: "中医・ハイエンド健康診断・厳選旅行を融合した6つのシグネチャーコース。すべて完全プライベート・完全アテンド。",
+    filterLabel: "絞り込み",
+    allThemes: "全テーマ",
+    themes: {
+      hotSpring: "温泉",
+      gorge: "峡谷",
+      tcm: "中医",
+      trail: "古道",
+      oldTown: "古町",
+      aesthetic: "都市美容",
+    },
+    dayBuckets: { all: "全日数", short: "1-3日", mid: "4-5日", long: "6日以上" },
+    count: (n) => `${n} 件のコース`,
+    compare: (n) => `比較 (${n})`,
+    daysUnit: "日",
+    nightsUnit: "泊",
+    from: "より",
+    bestLabel: "最適",
+    noResult: "該当するコースがありません。条件を変えてみてください。",
+    compareEyebrow: "Compare",
+    compareTitle: "コース比較",
+    clear: "クリア",
+    consultAdvisor: "アドバイザーに相談",
+    fieldLabel: "項目",
+    fieldDuration: "日数",
+    fieldIntensity: "強度",
+    fieldSeason: "最適季節",
+    fieldPrice: "料金",
+    fieldHighlight: "見どころ",
+    tailorEyebrow: "カスタムプラン",
+    tailorTitle: "ぴったりがなければ、オーダーメイド。",
+    tailorSub: "出発日・人数・ご希望をお聞かせください。24時間以内に2〜3案をご提案します。",
   },
   routesPage: {
     eyebrow: "Wellness Itineraries",

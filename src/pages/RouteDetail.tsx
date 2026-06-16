@@ -3,12 +3,15 @@ import { ArrowLeft, ArrowRight, Calendar, Compass, MapPin, Sparkles, Sun } from 
 import Reveal from "@/components/Reveal";
 import InquiryForm from "@/components/InquiryForm";
 import { routes } from "@/data/routes";
-import { useT } from "@/i18n/LanguageContext";
+import { useT } from "@/i18n/language-hooks";
 
 export default function RouteDetail() {
   const t = useT();
   const { id } = useParams<{ id: string }>();
-  const route = routes.find((r) => r.id === id);
+  // Support both id (e.g. "hot-spring-healing") and code (e.g. "R · 01" or "01")
+  const route = routes.find(
+    (r) => r.id === id || r.code === id || r.code.replace(/^R\s*·\s*/, "") === id
+  );
 
   if (!route) {
     return (

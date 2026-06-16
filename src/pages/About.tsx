@@ -3,7 +3,7 @@ import Reveal from "@/components/Reveal";
 import InquiryForm from "@/components/InquiryForm";
 import { partners } from "@/data/testimonials";
 import { img } from "@/utils/format";
-import { useLocale, useT } from "@/i18n/LanguageContext";
+import { useLocale, useT } from "@/i18n/language-hooks";
 
 const storyBg = img(
   "Aerial view of misty Chongqing mountain city at dawn, Yangtze river, cinematic warm light, photorealistic",

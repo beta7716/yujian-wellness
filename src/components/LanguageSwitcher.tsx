@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown, Globe } from "lucide-react";
-import { useLanguage } from "@/i18n/LanguageContext";
+import { useLanguage } from "@/i18n/language-hooks";
 
 export default function LanguageSwitcher() {
   const { locale, setLocale, locales, t } = useLanguage();

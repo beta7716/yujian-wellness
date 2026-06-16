@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 import InquiryForm from "@/components/InquiryForm";
 import { therapies, doctors, solarTerms, solarCover } from "@/data/tcm";
 import { img } from "@/utils/format";
-import { useLocale, useT } from "@/i18n/LanguageContext";
+import { useLocale, useT } from "@/i18n/language-hooks";
 
 const heroBg = img(
   "Traditional Chinese apothecary with wooden drawers, hanging dried herbs, brass instruments, warm lamplight, photorealistic",

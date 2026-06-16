@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useInquiryStore, type InquiryTopic } from "@/store/useInquiryStore";
 import { Check, Loader2, Send } from "lucide-react";
-import { useT } from "@/i18n/LanguageContext";
+import { useT } from "@/i18n/language-hooks";
 
 interface InquiryFormProps {
   compact?: boolean;
