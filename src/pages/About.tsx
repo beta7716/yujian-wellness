@@ -316,7 +316,7 @@ export default function About() {
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
                   backgroundImage: `url(${img(
-                    "Stylized map of Chongqing central business district at night with neon lights, photorealistic",
+                    "Aerial night view of Chongqing cityscape with the Yangtze and Jialing rivers converging, Hongya Cave stilted houses glowing in golden lights, misty mountains in the background, neon skyscrapers reflecting on the river surface, cinematic, photorealistic, ultra detailed",
                     "landscape_16_9"
                   )})`,
                 }}
