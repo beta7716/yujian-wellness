@@ -10,6 +10,13 @@ const SITE_TITLE: Record<Locale, string> = {
   "zh-CN": "渝见康养 · 医疗旅游 · 中国",
   en: "Yujian Wellness · Medical Tourism · China",
   ja: "渝見康養 · 医療観光 · 中国",
+  ko: "위젠웰니스 · 의료관광 · 중국",
+  ru: "Yujian Wellness · Медицинский туризм · Китай",
+  ar: "يوجيان ويلنس · السياحة العلاجية · الصين",
+  es: "Yujian Wellness · Turismo Médico · China",
+  fr: "Yujian Wellness · Tourisme Médical · Chine",
+  de: "Yujian Wellness · Medizintourismus · China",
+  pt: "Yujian Wellness · Turismo Médico · China",
 };
 
 function pageTitle(pathname: string, locale: Locale): string {
@@ -32,18 +39,28 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const browser = window.navigator.language;
     if (browser.startsWith("zh")) return "zh-CN";
     if (browser.startsWith("ja")) return "ja";
+    if (browser.startsWith("ko")) return "ko";
+    if (browser.startsWith("ru")) return "ru";
+    if (browser.startsWith("ar")) return "ar";
+    if (browser.startsWith("es")) return "es";
+    if (browser.startsWith("fr")) return "fr";
+    if (browser.startsWith("de")) return "de";
+    if (browser.startsWith("pt")) return "pt";
     if (browser.startsWith("en")) return "en";
     return DEFAULT_LOCALE;
   });
 
   const location = useLocation();
 
+  const meta = LOCALES.find((l) => l.code === locale);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(STORAGE_KEY, locale);
       document.documentElement.lang = locale;
+      document.documentElement.dir = meta?.rtl ? "rtl" : "ltr";
     }
-  }, [locale]);
+  }, [locale, meta?.rtl]);
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -55,6 +72,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
             "渝见康养 · 一站式中国医疗旅行管家。200+ 三甲医院、中医康养、签证与陪诊，资深顾问 24 小时响应。",
           en: "Yujian Wellness — premium medical tourism in China. 200+ tier-A hospitals, TCM, visa & concierge, 24/7 multilingual care.",
           ja: "渝見康養 — 中国医療旅行のワンストップ管家。200超の三甲病院・中医・ビザ・同行、24時間対応。",
+          ko: "위젠웰니스 — 중국 의료여행 원스톱 컨시어지. 200곳 이상 3A 병원·중의학·비자·동행, 24시간 지원.",
+          ru: "Yujian Wellness — премиальный медтуризм в Китае. 200+ больниц 3A, ТКМ, визы и консьерж, 24/7.",
+          ar: "يوجيان ويلنس — خدمات السياحة العلاجية في الصين. أكثر من 200 مستشفى فئة 3A والطب الصيني التقليدي وخدمة الكونسيرج على مدار الساعة.",
+          es: "Yujian Wellness — turismo médico premium en China. Más de 200 hospitales 3A, MTC, visados y conserjería 24/7.",
+          fr: "Yujian Wellness — tourisme médical premium en Chine. 200+ hôpitaux 3A, MTC, visas et conciergerie 24/7.",
+          de: "Yujian Wellness — Premium-Medizintourismus in China. 200+ 3A-Krankenhäuser, TCM, Visa & Concierge, 24/7.",
+          pt: "Yujian Wellness — turismo médico premium na China. Mais de 200 hospitais 3A, MTC, vistos e concierge 24/7.",
         };
         meta.setAttribute("content", descByLocale[locale]);
       }

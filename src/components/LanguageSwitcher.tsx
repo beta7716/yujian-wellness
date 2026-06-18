@@ -7,6 +7,7 @@ export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const current = locales.find((l) => l.code === locale) ?? locales[0];
+  const isRtl = document.documentElement.dir === "rtl";
 
   useEffect(() => {
     function onClick(e: MouseEvent) {
@@ -22,24 +23,24 @@ export default function LanguageSwitcher() {
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-ink-600 hover:text-cinnabar transition-colors px-2 py-1.5"
+        className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.25em] text-slate-700 hover:text-teal-700 transition-colors px-2.5 py-1.5 rounded-full border border-slate-200 hover:border-teal-600"
         title={t.nav.book}
       >
-        <Globe size={14} className="text-cinnabar" />
+        <Globe size={12} className="text-teal-600" />
         <span className="font-display">{current.flag} {current.short}</span>
         <ChevronDown
-          size={12}
+          size={11}
           className={`transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
       {open ? (
         <div
           role="listbox"
-          className="absolute right-0 top-full mt-2 min-w-[180px] bg-smoke-50 border border-ink-100 shadow-2xl shadow-ink-800/10 z-50 animate-fade-in"
+          className={`absolute ${isRtl ? "left-0" : "right-0"} top-full mt-2 min-w-[200px] max-h-[420px] overflow-y-auto bg-white border border-slate-200 shadow-2xl shadow-slate-900/10 z-50 rounded-xl`}
         >
-          <div className="px-4 py-3 border-b border-ink-100">
-            <div className="text-[10px] tracking-[0.4em] uppercase text-ink-400 font-display">
-              Language
+          <div className="px-4 py-3 border-b border-slate-100 sticky top-0 bg-white">
+            <div className="text-[10px] tracking-[0.4em] uppercase text-slate-400 font-display">
+              {t.footer.newsletterLabel === "邮件订阅" ? "Language" : t.footer.nav}
             </div>
           </div>
           <ul className="py-1">
@@ -55,14 +56,16 @@ export default function LanguageSwitcher() {
                       setOpen(false);
                     }}
                     className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
-                      active ? "text-cinnabar" : "text-ink-800 hover:bg-smoke-100"
+                      active
+                        ? "text-teal-700 bg-teal-50"
+                        : "text-slate-800 hover:bg-slate-50"
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
                       <span className="text-base leading-none">{l.flag}</span>
-                      <span className="font-serif">{l.label}</span>
+                      <span className="font-sans">{l.label}</span>
                     </span>
-                    {active ? <Check size={14} className="text-cinnabar" /> : null}
+                    {active ? <Check size={14} className="text-teal-600" /> : null}
                   </button>
                 </li>
               );
