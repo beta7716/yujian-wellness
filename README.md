@@ -1,4 +1,4 @@
-# 渝见·康养 | Chongqing Medical Tourism
+﻿# 渝见·康养 | Chongqing Medical Tourism
 
 > 以山城雾色为幕，融合高端医疗与传统中医药疗愈的重庆康养旅游门户。
 
@@ -39,7 +39,7 @@ npm run check    # TypeScript 类型检查
 npm run deploy
 ```
 
-部署后访问：[https://yangyun7716.github.io/yujian-wellness/](https://yangyun7716.github.io/yujian-wellness/)
+部署后访问：[https://beta7716.github.io/yujian-wellness/](https://beta7716.github.io/yujian-wellness/)
 
 ## 目录结构
 
