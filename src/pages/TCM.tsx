@@ -1,40 +1,25 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Calendar, Leaf, Sparkles } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import InquiryForm from "@/components/InquiryForm";
-import { therapies, doctors, solarTerms, solarCover } from "@/data/tcm";
+import { getTcmData, solarCover } from "@/data/tcm";
 import { img } from "@/utils/format";
-import { useLocale, useT } from "@/i18n/language-hooks";
+import { useLanguage, useT } from "@/i18n/language-hooks";
 
 const heroBg = img(
   "Traditional Chinese apothecary with wooden drawers, hanging dried herbs, brass instruments, warm lamplight, photorealistic",
   "landscape_16_9"
 );
 
-const therapyNameMap: Record<string, { zh: string; en: string; ja: string }> = {
-  acupuncture: { zh: "针灸", en: "Acupuncture", ja: "針灸" },
-  tuina: { zh: "推拿", en: "Tuina", ja: "推拿" },
-  moxibustion: { zh: "艾灸", en: "Moxibustion", ja: "艾灸" },
-  "herbal-bath": { zh: "草本药浴", en: "Herbal Bath", ja: "薬浴" },
-  gaofang: { zh: "膏方", en: "Gaofang", ja: "膏方" },
-};
-
 export default function TCM() {
+  const { locale } = useLanguage();
   const t = useT();
-  const locale = useLocale();
+  const { therapies, doctors, solarTerms } = useMemo(() => getTcmData(locale), [locale]);
   const [activeTherapy, setActiveTherapy] = useState(therapies[0].id);
   const [activeTerm, setActiveTerm] = useState<string | null>(null);
 
   const current = therapies.find((th) => th.id === activeTherapy)!;
   const currentTerm = solarTerms.find((s) => s.id === activeTerm);
-
-  const getTherapyName = (id: string) => {
-    const map = therapyNameMap[id];
-    if (!map) return id;
-    if (locale === "en") return map.en;
-    if (locale === "ja") return map.ja;
-    return map.zh;
-  };
 
   return (
     <>
@@ -92,7 +77,7 @@ export default function TCM() {
                     : "border-transparent text-ink-500 hover:text-ink-800"
                 }`}
               >
-                <span className="font-serif text-base mr-2">{getTherapyName(th.id)}</span>
+                <span className="font-serif text-base mr-2">{th.name}</span>
                 <span className="text-[10px] tracking-[0.2em] uppercase font-display">
                   {th.en}
                 </span>
@@ -120,7 +105,7 @@ export default function TCM() {
                   {current.en}
                 </div>
                 <h3 className="mt-3 font-serif text-4xl md:text-5xl text-ink-800">
-                  {getTherapyName(current.id)}
+                  {current.name}
                 </h3>
                 <p className="mt-8 text-ink-500 text-lg leading-relaxed">{current.desc}</p>
                 <div className="mt-10 inline-flex items-center gap-3 border-t border-ink-100 pt-6">
@@ -138,7 +123,7 @@ export default function TCM() {
                           : "border-ink-200 text-ink-600 hover:border-ink-800"
                       }`}
                     >
-                      {getTherapyName(th.id)}
+                      {th.name}
                     </button>
                   ))}
                 </div>
@@ -240,7 +225,7 @@ export default function TCM() {
                           activeTerm === s.id ? "text-smoke-200/70" : "text-ink-400"
                         }`}
                       >
-                        {s.month}
+                        {s.monthLabel}
                       </span>
                     </button>
                   ))}
@@ -250,7 +235,7 @@ export default function TCM() {
                   <div className="mt-8 border-l-2 border-cinnabar pl-6">
                     <div className="flex items-center gap-3 text-[11px] tracking-[0.3em] uppercase text-ink-500 font-display">
                       <Calendar size={12} className="text-cinnabar" />
-                      {currentTerm.name} · {currentTerm.month}
+                      {currentTerm.name} · {currentTerm.monthLabel}
                     </div>
                     <p className="mt-3 text-ink-700 leading-relaxed">{currentTerm.tip}</p>
                     <div className="mt-5 flex flex-wrap gap-2">

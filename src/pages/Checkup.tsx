@@ -1,10 +1,11 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, ShieldCheck } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import InquiryForm from "@/components/InquiryForm";
-import { checkupPackages } from "@/data/checkups";
+import { getCheckupPackages, type CheckupPackage } from "@/data/checkups";
 import { img } from "@/utils/format";
-import { useT } from "@/i18n/language-hooks";
+import { useLanguage, useT } from "@/i18n/language-hooks";
 
 const heroBg = img(
   "Modern luxury medical examination suite, dark wood and warm gold accents, panoramic window, photorealistic",
@@ -12,7 +13,9 @@ const heroBg = img(
 );
 
 export default function Checkup() {
+  const { locale } = useLanguage();
   const t = useT();
+  const checkupPackages = useMemo(() => getCheckupPackages(locale), [locale]);
   const recommendedId = "deep";
   return (
     <>
@@ -129,10 +132,10 @@ export default function Checkup() {
       </section>
 
       {/* Process */}
-      <ProcessFlow />
+      <ProcessFlow packages={checkupPackages} />
 
       {/* Institutions */}
-      <Institutions />
+      <Institutions packages={checkupPackages} />
 
       {/* Inquiry */}
       <section className="py-24 md:py-32 bg-smoke-100">
@@ -168,9 +171,9 @@ function FeatureChip({ icon: Icon, text }: { icon: React.ElementType; text: stri
   );
 }
 
-function ProcessFlow() {
+function ProcessFlow({ packages }: { packages: CheckupPackage[] }) {
   const t = useT();
-  const pkg = checkupPackages[1];
+  const pkg = packages.find((p) => p.id === "deep") ?? packages[1];
   return (
     <section className="py-24 md:py-32 bg-ink-800 text-smoke-50">
       <div className="container">
@@ -210,9 +213,9 @@ function ProcessFlow() {
   );
 }
 
-function Institutions() {
+function Institutions({ packages }: { packages: CheckupPackage[] }) {
   const t = useT();
-  const all = Array.from(new Set(checkupPackages.flatMap((p) => p.institutions)));
+  const all = useMemo(() => Array.from(new Set(packages.flatMap((p) => p.institutions))), [packages]);
   return (
     <section className="py-20 md:py-24 bg-smoke">
       <div className="container">

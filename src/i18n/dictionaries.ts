@@ -180,6 +180,7 @@ export type Dictionary = {
     curatorQuote: string;
     curatorName: string;
     curatorTitleRole: string;
+    curatorSeal: string;
     continueExploring: string;
     backToAll: string;
     moreRoutes: string;
@@ -268,9 +269,27 @@ export type Dictionary = {
     salonMode: string;
     openBy: string;
     stats: string[];
+    contactSeals: { phone: string; email: string; address: string };
+    milestones: { year: string; title: string; desc: string }[];
+    values: { title: string; desc: string }[];
   };
   // Days of week/month
   calendar: { day: string; from: string; per: string };
+  // Shared data labels (themes, intensity, departments, cities)
+  data: {
+    themes: Record<"hotSpring" | "gorge" | "tcm" | "trail" | "oldTown" | "aesthetic", string>;
+    intensity: Record<"light" | "moderate" | "deep", string>;
+    departments: Record<string, string>;
+    cities: Record<string, string>;
+  };
+  // Footer contact
+  contact: {
+    phone: string;
+    email: string;
+    address: string;
+    city: string;
+    wechat: string;
+  };
 };
 
 const zh: Dictionary = {
@@ -472,6 +491,7 @@ const zh: Dictionary = {
     curatorQuote: '"我们不希望你只是\'走完\'一段行程 — 我们希望你的身体在这几天里被慢下来、调回来。山城雾色会替你承担一部分呼吸，你只需要把自己交给这条线路。"',
     curatorName: "陈主理",
     curatorTitleRole: "Senior Curator · 渝见康养",
+    curatorSeal: "主",
     continueExploring: "Continue exploring",
     moreRoutes: "更多康养线路",
     backToAll: "返回全部线路",
@@ -556,6 +576,56 @@ const zh: Dictionary = {
     salonMode: "Open by appointment",
     openBy: "Open by appointment",
     stats: ["年深耕", "累计服务", "合作医院", "主题线路"],
+    contactSeals: { phone: "话", email: "邮", address: "地" },
+    milestones: [
+      { year: "2014", title: "品牌成立", desc: "在重庆渝中区成立渝见康养品牌。" },
+      { year: "2016", title: "三甲联盟", desc: "与重医附一院、西南医院签署战略合作。" },
+      { year: "2018", title: "名医顾问团", desc: "组建 12 人国家级名中医顾问团。" },
+      { year: "2021", title: "海外拓展", desc: "与瑞士鹰阁医疗、日本藤田观光开展合作。" },
+      { year: "2024", title: "服务 12,000+", desc: "累计服务国内外旅客 12,000 余人次。" }
+    ],
+    values: [
+      { title: "本土深耕", desc: "10 年深耕重庆，把山城资源吃透。" },
+      { title: "医者之心", desc: "我们不是旅行社，而是健康管家。" },
+      { title: "安全第一", desc: "三甲医院绿色通道，全流程保障。" },
+      { title: "东方雅韵", desc: "把康养升华为一次美学的相遇。" }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "温泉疗愈",
+      gorge: "江峡养心",
+      tcm: "中医世家",
+      trail: "古道徒步",
+      oldTown: "古镇静修",
+      aesthetic: "都市医美",
+    },
+    intensity: { light: "轻松", moderate: "适中", deep: "深度" },
+    departments: {
+      oncology: "肿瘤科",
+      cardiology: "心内科",
+      orthopedics: "骨科",
+      neurology: "神经科",
+      reproductive: "辅助生殖",
+      tcm: "中医康养",
+      cosmetic: "医美整形",
+      dental: "种植牙",
+    },
+    cities: {
+      chongqing: "重庆",
+      beijing: "北京",
+      shanghai: "上海",
+      guangzhou: "广州",
+      shenzhen: "深圳",
+      hangzhou: "杭州",
+    },
+  },
+  contact: {
+    phone: "400 · 626 · 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "重庆市渝中区解放碑民族路 188 号",
+    city: "重庆 · 渝中 · 解放碑 CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "Day", from: "from", per: "/人起" },
 };
@@ -758,6 +828,7 @@ const en: Dictionary = {
     curatorQuote: '"We don\'t want you to just \'finish\' a trip — we want your body to slow down and recalibrate over these days. The Chongqing mist will hold part of your breath; you only need to hand yourself to this route."',
     curatorName: "Mr. Chen",
     curatorTitleRole: "Senior Curator · Yujian Wellness",
+    curatorSeal: "CU",
     continueExploring: "Continue exploring",
     moreRoutes: "More itineraries",
     backToAll: "Back to all",
@@ -842,6 +913,56 @@ const en: Dictionary = {
     salonMode: "Open by appointment",
     openBy: "Open by appointment",
     stats: ["Years of focus", "Guests served", "Partner hospitals", "Itineraries"],
+    contactSeals: { phone: "TEL", email: "EML", address: "ADR" },
+    milestones: [
+      { year: "2014", title: "Brand Founded", desc: "Yujian Wellness was established in Yuzhong, Chongqing." },
+      { year: "2016", title: "Tier-A Alliance", desc: "Strategic partnerships with CQMU First Hospital and Southwest Hospital." },
+      { year: "2018", title: "Master Doctors", desc: "Formed a 12-person national TCM master advisory board." },
+      { year: "2021", title: "Global Expansion", desc: "Collaboration with Swiss Gleneagles and Japan Fujita Kanko." },
+      { year: "2024", title: "12,000+ Guests", desc: "Served over 12,000 domestic and international travelers." }
+    ],
+    values: [
+      { title: "Local Roots", desc: "Ten years of deep roots in Chongqing, unlocking mountain-city resources." },
+      { title: "Healer's Heart", desc: "We are not a travel agency; we are your health butler." },
+      { title: "Safety First", desc: "Tier-A hospital green channels and end-to-end safeguards." },
+      { title: "Eastern Elegance", desc: "Elevating wellness into an aesthetic encounter." }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "Hot Spring",
+      gorge: "Gorge Wellness",
+      tcm: "TCM Heritage",
+      trail: "Ancient Trail",
+      oldTown: "Old Town Retreat",
+      aesthetic: "Urban Aesthetics",
+    },
+    intensity: { light: "Light", moderate: "Moderate", deep: "Deep" },
+    departments: {
+      oncology: "Oncology",
+      cardiology: "Cardiology",
+      orthopedics: "Orthopedics",
+      neurology: "Neurology",
+      reproductive: "Reproductive Medicine",
+      tcm: "TCM Wellness",
+      cosmetic: "Cosmetic Surgery",
+      dental: "Dental Implants",
+    },
+    cities: {
+      chongqing: "Chongqing",
+      beijing: "Beijing",
+      shanghai: "Shanghai",
+      guangzhou: "Guangzhou",
+      shenzhen: "Shenzhen",
+      hangzhou: "Hangzhou",
+    },
+  },
+  contact: {
+    phone: "+86 400 626 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "188 Minzu Road, Jiefangbei, Yuzhong District, Chongqing",
+    city: "Chongqing · Yuzhong · Jiefangbei CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "Day", from: "from", per: "/인~" },
 };
@@ -1044,6 +1165,7 @@ const ko: Dictionary = {
     curatorQuote: '"\'끝내\'는 여행이 아니라, 며칠 동안 몸이 천천히 다시 맞춰지는 여행을 원합니다. 충칭의 안개가 호흡의 일부를 맡아줄 거예요. 그저 이 코스에 몸을 맡기시면 됩니다."',
     curatorName: "Chen 큐레이터",
     curatorTitleRole: "Senior Curator · 위젠웰니스",
+    curatorSeal: "주",
     continueExploring: "Continue exploring",
     moreRoutes: "다른 코스",
     backToAll: "전체 코스로",
@@ -1128,6 +1250,56 @@ const ko: Dictionary = {
     salonMode: "Open by appointment",
     openBy: "Open by appointment",
     stats: ["활동 연수", "누적 고객", "제휴 병원", "코스 수"],
+    contactSeals: { phone: "TEL", email: "EML", address: "ADR" },
+    milestones: [
+      { year: "2014", title: "브랜드 설립", desc: "충칭 위중구에서 위젠 웰니스 브랜드 설립." },
+      { year: "2016", title: "三甲 연합", desc: "충의부일원, 서남병원과 전략 협약 체결." },
+      { year: "2018", title: "명의 자문단", desc: "국가급 명중의 12명으로 자문단 구성." },
+      { year: "2021", title: "해외 확장", desc: "스위스 글eneagles, 일본 후지타 관광과 협력." },
+      { year: "2024", title: "12,000명 이상", desc: "누적 국내외 고객 12,000명 이상 서비스." }
+    ],
+    values: [
+      { title: "로컬 뿌리", desc: "10년간 충칭에 깊이 뿌리낸 산성 자원 활용." },
+      { title: "의사의 마음", desc: "여행사가 아닌 건강管家입니다." },
+      { title: "안전 제일", desc: "三甲 병원 그린通道, 전 과정 보장." },
+      { title: "동방의 우아함", desc: "양생을 미학적인 만남으로 승화." }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "온천 힐링",
+      gorge: "협곡 양심",
+      tcm: "중의 가문",
+      trail: "고도 트레킹",
+      oldTown: "고진 정수",
+      aesthetic: "도시 미용",
+    },
+    intensity: { light: "가벼움", moderate: "보통", deep: "깊음" },
+    departments: {
+      oncology: "종양과",
+      cardiology: "순환기과",
+      orthopedics: "정형외과",
+      neurology: "신경과",
+      reproductive: "생식의학",
+      tcm: "중의 양생",
+      cosmetic: "성형외과",
+      dental: "임플란트 치과",
+    },
+    cities: {
+      chongqing: "충칭",
+      beijing: "베이징",
+      shanghai: "상하이",
+      guangzhou: "광저우",
+      shenzhen: "선전",
+      hangzhou: "항저우",
+    },
+  },
+  contact: {
+    phone: "+86 400 626 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "중국 충칭시 위중구 지에팡베이 민족로 188호",
+    city: "충칭 · 위중 · 지에팡베이 CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "Day", from: "부터", per: "/인~" },
 };
@@ -1330,6 +1502,7 @@ const ru: Dictionary = {
     curatorQuote: '"Мы не хотим, чтобы вы просто «закончили» маршрут — мы хотим, чтобы ваше тело замедлилось и перенастроилось. Чунцинский туман возьмёт на себя часть вашего дыхания; вам нужно лишь довериться этому маршруту."',
     curatorName: "Г-н Чэнь",
     curatorTitleRole: "Senior Curator · Yujian Wellness",
+    curatorSeal: "КУ",
     continueExploring: "Continue exploring",
     moreRoutes: "Ещё маршруты",
     backToAll: "Назад",
@@ -1414,6 +1587,56 @@ const ru: Dictionary = {
     salonMode: "Open by appointment",
     openBy: "Open by appointment",
     stats: ["Лет на рынке", "Обслужено гостей", "Партнёрских больниц", "Маршрутов"],
+    contactSeals: { phone: "ТЛФ", email: "ПЧТ", address: "АДР" },
+    milestones: [
+      { year: "2014", title: "Основание", desc: "Бренд Yujian Wellness основан в районе Юйчжун, Чунцин." },
+      { year: "2016", title: "Альянс 3А", desc: "Стратегическое партнерство с Первой больницей ЧМУ и Юго-западной больницей." },
+      { year: "2018", title: "Совет мастеров", desc: "Сформирован консультативный совет из 12 национальных мастеров ТКМ." },
+      { year: "2021", title: "Международное развитие", desc: "Сотрудничество со швейцарскими Gleneagles и японскими Fujita Kanko." },
+      { year: "2024", title: "12 000+ гостей", desc: "Обслужено более 12 000 внутренних и международных путешественников." }
+    ],
+    values: [
+      { title: "Глубокие корни", desc: "Десять лет работы в Чунцине, раскрывающие ресурсы города-горы." },
+      { title: "Сердце целителя", desc: "Мы не туристическое агентство, а ваш управляющий здоровьем." },
+      { title: "Безопасность превыше", desc: "Коридоры больниц 3А и сквозные гарантии." },
+      { title: "Восточная элегантность", desc: "Превращение оздоровления в эстетическую встречу." }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "Термальные источники",
+      gorge: "Ущелье и осознанность",
+      tcm: "Наследие ТКМ",
+      trail: "Древняя тропа",
+      oldTown: "Тишина старого города",
+      aesthetic: "Городская эстетика",
+    },
+    intensity: { light: "Легкая", moderate: "Средняя", deep: "Глубокая" },
+    departments: {
+      oncology: "Онкология",
+      cardiology: "Кардиология",
+      orthopedics: "Ортопедия",
+      neurology: "Неврология",
+      reproductive: "Репродуктивная медицина",
+      tcm: "ТКМ-велнес",
+      cosmetic: "Косметическая хирургия",
+      dental: "Дентальные импланты",
+    },
+    cities: {
+      chongqing: "Чунцин",
+      beijing: "Пекин",
+      shanghai: "Шанхай",
+      guangzhou: "Гуанчжоу",
+      shenzhen: "Шэньчжэнь",
+      hangzhou: "Ханчжоу",
+    },
+  },
+  contact: {
+    phone: "+86 400 626 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "188 Минцзу Лу, Цзефанбэй, район Юйчжун, Чунцин, Китай",
+    city: "Чунцин · Юйчжун · Цзефанбэй CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "День", from: "от", per: "/гость" },
 };
@@ -1616,6 +1839,7 @@ const ja: Dictionary = {
     curatorQuote: '"コースを\'完了\'してほしいのではなく、数日間で身体がゆっくり調うことを大切にしています。重慶の霧が呼吸の一部を担います。あなたはこのコースに身を委ねてください。"',
     curatorName: "陳キュレーター",
     curatorTitleRole: "Senior Curator · 渝見康養",
+    curatorSeal: "主",
     continueExploring: "Continue exploring",
     moreRoutes: "他のコース",
     backToAll: "全コースに戻る",
@@ -1700,6 +1924,56 @@ const ja: Dictionary = {
     salonMode: "Open by appointment",
     openBy: "Open by appointment",
     stats: ["創業年数", "累計サービス", "提携病院", "コース数"],
+    contactSeals: { phone: "TEL", email: "EML", address: "ADR" },
+    milestones: [
+      { year: "2014", title: "ブランド設立", desc: "重慶渝中区にて渝見康養ブランドを設立。" },
+      { year: "2016", title: "三甲連携", desc: "重医附一院・西南医院と戦略提携を締結。" },
+      { year: "2018", title: "名医顧問団", desc: "国家級名中医12名による顧問団を結成。" },
+      { year: "2021", title: "海外展開", desc: "スイスのグレンイーグルス、日本の藤田観光と提携。" },
+      { year: "2024", title: "12,000名以上", desc: "累計国内外ゲスト12,000名以上をお迎え。" }
+    ],
+    values: [
+      { title: "地域深耕", desc: "10年重慶に根ざし、山街の資源を深く把握。" },
+      { title: "医者の心", desc: "旅行会社ではなく、健康管家（バトラー）です。" },
+      { title: "安全第一", desc: "三甲病院グリーン通道、エンドtoエンド保障。" },
+      { title: "東洋の雅", desc: "養生を美学的な出会いへと昇華。" }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "温泉療養",
+      gorge: "三峡リトリート",
+      tcm: "中医世家",
+      trail: "古道ハイキング",
+      oldTown: "古鎮静修",
+      aesthetic: "都市美容医療",
+    },
+    intensity: { light: "軽め", moderate: "普通", deep: "深い" },
+    departments: {
+      oncology: "腫瘍科",
+      cardiology: "循環器科",
+      orthopedics: "整形外科",
+      neurology: "神経科",
+      reproductive: "生殖医療",
+      tcm: "中医養生",
+      cosmetic: "美容外科",
+      dental: "インプラント歯科",
+    },
+    cities: {
+      chongqing: "重慶",
+      beijing: "北京",
+      shanghai: "上海",
+      guangzhou: "広州",
+      shenzhen: "深セン",
+      hangzhou: "杭州",
+    },
+  },
+  contact: {
+    phone: "+86 400 626 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "中国重慶市渝中区解放碑民族路188号",
+    city: "重慶 · 渝中 · 解放碑 CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "Day", from: "from", per: "/人〜" },
 };
@@ -1902,6 +2176,7 @@ const ar: Dictionary = {
     curatorQuote: '"لا نريد أن \'تنهي\' الرحلة فحسب — بل أن يبطئ جسدك ويعيد ضبط نفسه خلال هذه الأيام. ضباب تشونغتشينغ سيحمل جزءاً من أنفاسك؛ كل ما عليك هو أن تسلم نفسك لهذا المسار."',
     curatorName: "السيد تشن",
     curatorTitleRole: "منسّق أول · Yujian Wellness",
+    curatorSeal: "ر",
     continueExploring: "تابع الاستكشاف",
     moreRoutes: "برامج أخرى",
     backToAll: "العودة للكل",
@@ -1986,6 +2261,56 @@ const ar: Dictionary = {
     salonMode: "مفتوح بحجز مسبق",
     openBy: "مفتوح بحجز مسبق",
     stats: ["سنوات من التركيز", "ضيوف خُدموا", "مستشفيات شريكة", "برامج"],
+    contactSeals: { phone: "هاتف", email: "بريد", address: "عنوان" },
+    milestones: [
+      { year: "2014", title: "تأسيس العلامة", desc: "تأسست علامة يوجيان ويلنس في يوزهونغ، تشونغتشينغ." },
+      { year: "2016", title: "تحالف 3A", desc: "شراكات استراتيجية مع المستشفى الأول والمستشفى الجنوبي الغربي." },
+      { year: "2018", title: "مجلس الأطباء", desc: "تشكيل مجلس استشاري من 12 أستاذاً وطنياً في الطب الصيني." },
+      { year: "2021", title: "التوسع الدولي", desc: "التعاون مع Gleneagles السويسرية وFujita Kanko اليابانية." },
+      { year: "2024", title: "أكثر من 12,000 ضيف", desc: "خدمة أكثر من 12,000 مسافر محلي ودولي." }
+    ],
+    values: [
+      { title: "جذور محلية", desc: "عشر سنوات من الجذور العميقة في تشونغتشينغ." },
+      { title: "قلب الشافي", desc: "لسنا وكالة سفر، بل نحن مدير صحتك." },
+      { title: "السلامة أولاً", desc: "ممرات خضراء في مستشفيات 3A وحماية شاملة." },
+      { title: "أناقة شرقية", desc: "رفع العافية إلى لقاء جمالي." }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "الينابيع الساخنة",
+      gorge: "الوادي والتأمل",
+      tcm: "إرث الطب الصيني",
+      trail: "المسار القديم",
+      oldTown: "هدوء المدينة القديمة",
+      aesthetic: "الجمال الحضري",
+    },
+    intensity: { light: "خفيفة", moderate: "متوسطة", deep: "عميقة" },
+    departments: {
+      oncology: "الأورام",
+      cardiology: "أمراض القلب",
+      orthopedics: "جراحة العظام",
+      neurology: "الأعصاب",
+      reproductive: "طب الإنجاب",
+      tcm: "الطب الصيني التقليدي",
+      cosmetic: "الجراحة التجميلية",
+      dental: "زراعة الأسنان",
+    },
+    cities: {
+      chongqing: "تشونغتشينغ",
+      beijing: "بكين",
+      shanghai: "شنغهاي",
+      guangzhou: "قوانغتشو",
+      shenzhen: "شنتشن",
+      hangzhou: "هانغتشو",
+    },
+  },
+  contact: {
+    phone: "+86 400 626 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "188 شارع مينزو، جيه فانغ بي، منطقة يوزهونغ، تشونغتشينغ، الصين",
+    city: "تشونغتشينغ · يوزهونغ · جيه فانغ بي CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "يوم", from: "من", per: "/ضيف" },
 };
@@ -2188,6 +2513,7 @@ const es: Dictionary = {
     curatorQuote: '"No queremos que \'termines\' un viaje — queremos que tu cuerpo desacelere y se recalibre en estos días. La niebla de Chongqing sostendrá parte de tu aliento; solo necesitas entregarte a esta ruta."',
     curatorName: "Sr. Chen",
     curatorTitleRole: "Curador senior · Yujian Wellness",
+    curatorSeal: "CU",
     continueExploring: "Sigue explorando",
     moreRoutes: "Más itinerarios",
     backToAll: "Volver",
@@ -2272,6 +2598,56 @@ const es: Dictionary = {
     salonMode: "Con cita previa",
     openBy: "Con cita previa",
     stats: ["Años de enfoque", "Huéspedes atendidos", "Hospitales aliados", "Itinerarios"],
+    contactSeals: { phone: "TEL", email: "EMA", address: "DIR" },
+    milestones: [
+      { year: "2014", title: "Fundación", desc: "Yujian Wellness se fundó en Yuzhong, Chongqing." },
+      { year: "2016", title: "Alianza 3A", desc: "Alianzas estratégicas con el Primer Hospital de la Universidad Médica de Chongqing y Southwest Hospital." },
+      { year: "2018", title: "Consejo de maestros", desc: "Formación de un consejo asesor de 12 maestros nacionales de MTC." },
+      { year: "2021", title: "Expansión global", desc: "Colaboración con Gleneagles Suiza y Fujita Kanko Japón." },
+      { year: "2024", title: "12.000+ huéspedes", desc: "Más de 12.000 viajeros nacionales e internacionales atendidos." }
+    ],
+    values: [
+      { title: "Raíces locales", desc: "Diez años de raíces profundas en Chongqing." },
+      { title: "Corazón de sanador", desc: "No somos una agencia de viajes, somos su mayordomo de salud." },
+      { title: "Seguridad primero", desc: "Canales verdes en hospitales 3A y salvaguardas de extremo a extremo." },
+      { title: "Elegancia oriental", desc: "Elevar el bienestar a un encuentro estético." }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "Aguas termales",
+      gorge: "Garganta y mindfulness",
+      tcm: "Herencia MTC",
+      trail: "Sendero antiguo",
+      oldTown: "Retiro en pueblo antiguo",
+      aesthetic: "Estética urbana",
+    },
+    intensity: { light: "Ligera", moderate: "Moderada", deep: "Profunda" },
+    departments: {
+      oncology: "Oncología",
+      cardiology: "Cardiología",
+      orthopedics: "Ortopedia",
+      neurology: "Neurología",
+      reproductive: "Medicina reproductiva",
+      tcm: "Bienestar MTC",
+      cosmetic: "Cirugía estética",
+      dental: "Implantes dentales",
+    },
+    cities: {
+      chongqing: "Chongqing",
+      beijing: "Pekín",
+      shanghai: "Shanghái",
+      guangzhou: "Cantón",
+      shenzhen: "Shenzhen",
+      hangzhou: "Hangzhou",
+    },
+  },
+  contact: {
+    phone: "+86 400 626 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "188 Minzu Road, Jiefangbei, Distrito Yuzhong, Chongqing, China",
+    city: "Chongqing · Yuzhong · Jiefangbei CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "Día", from: "desde", per: "/huésped" },
 };
@@ -2474,6 +2850,7 @@ const fr: Dictionary = {
     curatorQuote: '"Nous ne voulons pas que vous \'finissiez\' un voyage — nous voulons que votre corps ralentisse et se recalibre. La brume de Chongqing portera une partie de votre souffle ; il vous suffit de vous abandonner à cet itinéraire."',
     curatorName: "M. Chen",
     curatorTitleRole: "Curateur senior · Yujian Wellness",
+    curatorSeal: "CU",
     continueExploring: "Continuer l'exploration",
     moreRoutes: "Plus d'itinéraires",
     backToAll: "Retour",
@@ -2558,6 +2935,56 @@ const fr: Dictionary = {
     salonMode: "Sur rendez-vous",
     openBy: "Sur rendez-vous",
     stats: ["Années d'engagement", "Invités accompagnés", "Hôpitaux partenaires", "Itinéraires"],
+    contactSeals: { phone: "TÉL", email: "MEL", address: "ADR" },
+    milestones: [
+      { year: "2014", title: "Fondation", desc: "Yujian Wellness a été fondé à Yuzhong, Chongqing." },
+      { year: "2016", title: "Alliance 3A", desc: "Partenariats stratégiques avec le Premier hôpital de l'université médicale de Chongqing et l'hôpital Southwest." },
+      { year: "2018", title: "Conseil de maîtres", desc: "Formation d'un conseil consultatif de 12 maîtres nationaux de MTC." },
+      { year: "2021", title: "Expansion mondiale", desc: "Collaboration avec Gleneagles Suisse et Fujita Kanko Japon." },
+      { year: "2024", title: "12 000+ clients", desc: "Plus de 12 000 voyageurs nationaux et internationaux accueillis." }
+    ],
+    values: [
+      { title: "Racines locales", desc: "Dix ans d'enracinement profond à Chongqing." },
+      { title: "Cœur de guérisseur", desc: "Nous ne sommes pas une agence de voyage, mais votre majordome de santé." },
+      { title: "Sécurité d'abord", desc: "Couloirs verts dans les hôpitaux 3A et garanties de bout en bout." },
+      { title: "Élégance orientale", desc: "Élever le bien-être en une rencontre esthétique." }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "Sources chaudes",
+      gorge: "Gorge et pleine conscience",
+      tcm: "Héritage MTC",
+      trail: "Sentier ancien",
+      oldTown: "Retraite villageoise",
+      aesthetic: "Esthétique urbaine",
+    },
+    intensity: { light: "Légère", moderate: "Modérée", deep: "Profonde" },
+    departments: {
+      oncology: "Oncologie",
+      cardiology: "Cardiologie",
+      orthopedics: "Orthopédie",
+      neurology: "Neurologie",
+      reproductive: "Médecine reproductive",
+      tcm: "Bien-être MTC",
+      cosmetic: "Chirurgie esthétique",
+      dental: "Implants dentaires",
+    },
+    cities: {
+      chongqing: "Chongqing",
+      beijing: "Pékin",
+      shanghai: "Shanghai",
+      guangzhou: "Canton",
+      shenzhen: "Shenzhen",
+      hangzhou: "Hangzhou",
+    },
+  },
+  contact: {
+    phone: "+86 400 626 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "188 Minzu Road, Jiefangbei, District Yuzhong, Chongqing, Chine",
+    city: "Chongqing · Yuzhong · Jiefangbei CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "Jour", from: "à partir de", per: "/invité" },
 };
@@ -2760,6 +3187,7 @@ const de: Dictionary = {
     curatorQuote: '"Wir wollen nicht, dass Sie eine Reise \'beenden\' — wir wollen, dass Ihr Körper langsamer wird und sich neu einstellt. Der Chongqing-Nebel trägt einen Teil Ihres Atems; übergeben Sie sich einfach dieser Reise."',
     curatorName: "Hr. Chen",
     curatorTitleRole: "Senior-Kurator · Yujian Wellness",
+    curatorSeal: "KU",
     continueExploring: "Weiter entdecken",
     moreRoutes: "Weitere Reisen",
     backToAll: "Zurück",
@@ -2844,6 +3272,56 @@ const de: Dictionary = {
     salonMode: "Nach Vereinbarung",
     openBy: "Nach Vereinbarung",
     stats: ["Jahre Fokus", "Begleitete Gäste", "Partner-Krankenhäuser", "Reisen"],
+    contactSeals: { phone: "TEL", email: "E-ML", address: "ADR" },
+    milestones: [
+      { year: "2014", title: "Markengründung", desc: "Yujian Wellness wurde in Yuzhong, Chongqing, gegründet." },
+      { year: "2016", title: "3A-Allianz", desc: "Strategische Partnerschaften mit dem Ersten Krankenhaus der Medizinischen Universität Chongqing und dem Southwest Hospital." },
+      { year: "2018", title: "Meisterbeirat", desc: "Aufbau eines 12-köpfigen nationalen TCM-Meisterbeirats." },
+      { year: "2021", title: "Globale Expansion", desc: "Zusammenarbeit mit Swiss Gleneagles und Japan Fujita Kanko." },
+      { year: "2024", title: "12.000+ Gäste", desc: "Mehr als 12.000 nationale und internationale Reisende betreut." }
+    ],
+    values: [
+      { title: "Lokale Wurzeln", desc: "Zehn Jahre tiefe Verwurzelung in Chongqing." },
+      { title: "Heilerherz", desc: "Wir sind kein Reisebüro, sondern Ihr Gesundheitsbutler." },
+      { title: "Sicherheit zuerst", desc: "Grüne Kanäle in 3A-Krankenhäusern und durchgängige Absicherung." },
+      { title: "Östliche Eleganz", desc: "Wellness zu einer ästhetischen Begegnung erheben." }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "Thermalquellen",
+      gorge: "Schlucht & Achtsamkeit",
+      tcm: "TCM-Heritage",
+      trail: "Alter Pfad",
+      oldTown: "Altstadt-Retreat",
+      aesthetic: "Urban Ästhetik",
+    },
+    intensity: { light: "Leicht", moderate: "Mittel", deep: "Tief" },
+    departments: {
+      oncology: "Onkologie",
+      cardiology: "Kardiologie",
+      orthopedics: "Orthopädie",
+      neurology: "Neurologie",
+      reproductive: "Reproduktionsmedizin",
+      tcm: "TCM-Wellness",
+      cosmetic: "Ästhetische Chirurgie",
+      dental: "Zahnimplantate",
+    },
+    cities: {
+      chongqing: "Chongqing",
+      beijing: "Peking",
+      shanghai: "Shanghai",
+      guangzhou: "Kanton",
+      shenzhen: "Shenzhen",
+      hangzhou: "Hangzhou",
+    },
+  },
+  contact: {
+    phone: "+86 400 626 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "188 Minzu Road, Jiefangbei, Bezirk Yuzhong, Chongqing, China",
+    city: "Chongqing · Yuzhong · Jiefangbei CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "Tag", from: "ab", per: "/Gast" },
 };
@@ -3046,6 +3524,7 @@ const pt: Dictionary = {
     curatorQuote: '"Não queremos que \'termine\' uma viagem — queremos que seu corpo desacelere e se recalibre. A névoa de Chongqing carrega parte do seu sopro; basta entregar-se a este roteiro."',
     curatorName: "Sr. Chen",
     curatorTitleRole: "Curador sênior · Yujian Wellness",
+    curatorSeal: "CU",
     continueExploring: "Continue explorando",
     moreRoutes: "Mais roteiros",
     backToAll: "Voltar",
@@ -3130,6 +3609,56 @@ const pt: Dictionary = {
     salonMode: "Com marcação",
     openBy: "Com marcação",
     stats: ["Anos de foco", "Hóspedes atendidos", "Hospitais parceiros", "Roteiros"],
+    contactSeals: { phone: "TEL", email: "EMA", address: "END" },
+    milestones: [
+      { year: "2014", title: "Fundação", desc: "Yujian Wellness foi fundado em Yuzhong, Chongqing." },
+      { year: "2016", title: "Aliança 3A", desc: "Parcerias estratégicas com o Primeiro Hospital da Universidade Médica de Chongqing e o Hospital Southwest." },
+      { year: "2018", title: "Conselho de mestres", desc: "Formação de um conselho consultivo de 12 mestres nacionais de MTC." },
+      { year: "2021", title: "Expansão global", desc: "Colaboração com a Gleneagles Suíça e a Fujita Kanko Japão." },
+      { year: "2024", title: "12.000+ hóspedes", desc: "Mais de 12.000 viajantes nacionais e internacionais atendidos." }
+    ],
+    values: [
+      { title: "Raízes locais", desc: "Dez anos de raízes profundas em Chongqing." },
+      { title: "Coração de curandeiro", desc: "Não somos uma agência de viagens, somos seu mordomo de saúde." },
+      { title: "Segurança primeiro", desc: "Canais verdes em hospitais 3A e salvaguardas de ponta a ponta." },
+      { title: "Elegância oriental", desc: "Elevar o bem-estar a um encontro estético." }
+    ],
+  },
+  data: {
+    themes: {
+      hotSpring: "Águas termais",
+      gorge: "Garganta e atenção plena",
+      tcm: "Herança MTC",
+      trail: "Trilha antiga",
+      oldTown: "Retiro na cidade antiga",
+      aesthetic: "Estética urbana",
+    },
+    intensity: { light: "Leve", moderate: "Moderada", deep: "Profunda" },
+    departments: {
+      oncology: "Oncologia",
+      cardiology: "Cardiologia",
+      orthopedics: "Ortopedia",
+      neurology: "Neurologia",
+      reproductive: "Medicina reprodutiva",
+      tcm: "Bem-estar MTC",
+      cosmetic: "Cirurgia estética",
+      dental: "Implantes dentários",
+    },
+    cities: {
+      chongqing: "Chongqing",
+      beijing: "Pequim",
+      shanghai: "Xangai",
+      guangzhou: "Cantão",
+      shenzhen: "Shenzhen",
+      hangzhou: "Hangzhou",
+    },
+  },
+  contact: {
+    phone: "+86 400 626 1911",
+    email: "concierge@yujian-wellness.cn",
+    address: "188 Minzu Road, Jiefangbei, Distrito Yuzhong, Chongqing, China",
+    city: "Chongqing · Yuzhong · Jiefangbei CBD",
+    wechat: "yujian-wellness",
   },
   calendar: { day: "Dia", from: "a partir de", per: "/hóspede" },
 };

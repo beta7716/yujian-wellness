@@ -1,158 +1,165 @@
 import { img } from "@/utils/format";
+import type { Locale } from "@/i18n/dictionaries";
 
-export interface TcmTherapy {
+export const solarCover = img(
+  "Traditional Chinese solar terms calendar, four seasons landscape collage, mountains rivers cherry blossoms lotus golden wheat snow, elegant ink painting style blended with photorealistic detail",
+  "landscape_16_9"
+);
+import tcmZhCN from "./locales/tcm.zh-CN";
+import tcmEn from "./locales/tcm.en";
+import tcmJa from "./locales/tcm.ja";
+import tcmKo from "./locales/tcm.ko";
+import tcmRu from "./locales/tcm.ru";
+import tcmAr from "./locales/tcm.ar";
+import tcmEs from "./locales/tcm.es";
+import tcmFr from "./locales/tcm.fr";
+import tcmDe from "./locales/tcm.de";
+import tcmPt from "./locales/tcm.pt";
+
+export interface BaseTcmTherapy {
   id: string;
+  cover: string;
+}
+
+export interface LocalizedTcmTherapy {
   name: string;
   en: string;
   desc: string;
   benefit: string;
+}
+
+export interface TcmTherapy extends BaseTcmTherapy, LocalizedTcmTherapy {}
+
+export interface BaseTcmDoctor {
+  id: string;
+  years: number;
   cover: string;
 }
 
-export interface TcmDoctor {
-  id: string;
+export interface LocalizedTcmDoctor {
   name: string;
   title: string;
   specialty: string;
-  years: number;
   schedule: string;
-  cover: string;
 }
 
-export interface SolarTerm {
+export interface TcmDoctor extends BaseTcmDoctor, LocalizedTcmDoctor {}
+
+export interface BaseSolarTerm {
   id: string;
+  month: number;
+  solarCover: string;
+}
+
+export interface LocalizedSolarTerm {
   name: string;
-  month: string;
+  monthLabel: string;
   tip: string;
   herbs: string[];
-  cover?: string;
 }
 
-export const therapies: TcmTherapy[] = [
+export interface SolarTerm extends BaseSolarTerm, LocalizedSolarTerm {}
+
+export interface TcmData {
+  therapies: TcmTherapy[];
+  doctors: TcmDoctor[];
+  solarTerms: SolarTerm[];
+}
+
+const baseTherapies: BaseTcmTherapy[] = [
   {
     id: "acupuncture",
-    name: "针灸",
-    en: "Acupuncture",
-    desc: "以毫针循经取穴，调和气血、疏通经络，适用于慢性疼痛、失眠与亚健康调理。",
-    benefit: "镇痛 · 安神 · 调节免疫",
-    cover: img(
-      "Traditional Chinese acupuncture treatment close-up, hands inserting fine needles, warm clinic light, photorealistic",
-      "square"
-    ),
+    cover: img("Fine acupuncture needles on model meridian points, warm clinical light, photorealistic", "square"),
   },
   {
-    id: "tuina",
-    name: "推拿",
-    en: "Tuina",
-    desc: "中医手法以按、揉、推、拿作用于经络与经筋，松解粘连，活血通络。",
-    benefit: "舒筋 · 活血 · 缓解疲劳",
-    cover: img(
-      "Traditional Chinese tuina massage on back, hands working, warm wood and linen, photorealistic",
-      "square"
-    ),
+    id: "cupping",
+    cover: img("Traditional Chinese cupping therapy on back with red circular marks, spa setting, photorealistic", "square"),
   },
   {
     id: "moxibustion",
-    name: "艾灸",
-    en: "Moxibustion",
-    desc: "点燃艾绒于穴位之上，温通经脉、散寒祛湿，是冬季调养与宫寒调理的首选。",
-    benefit: "温阳 · 散寒 · 扶正气",
-    cover: img(
-      "Traditional Chinese moxibustion therapy, smoke rising, warm light, calm clinic, photorealistic",
-      "square"
-    ),
+    cover: img("Moxibustion treatment with burning mugwort stick near skin, warm glow, photorealistic", "square"),
+  },
+  {
+    id: "tuina",
+    cover: img("Professional Chinese tuina massage on shoulders, therapeutic room, photorealistic", "square"),
   },
   {
     id: "herbal-bath",
-    name: "草本药浴",
-    en: "Herbal Bath",
-    desc: "以黄芪、当归、艾叶等二十余味中草药煮汤浸浴，透皮吸收，祛湿排毒。",
-    benefit: "祛湿 · 排毒 · 美肤",
-    cover: img(
-      "Traditional Chinese herbal bath in wooden tub, herbs floating, steam, zen atmosphere, photorealistic",
-      "square"
-    ),
+    cover: img("Ceramic bathtub filled with herbal water and flower petals, steam, zen bathroom, photorealistic", "square"),
   },
   {
-    id: "gaofang",
-    name: "膏方",
-    en: "Herbal Paste",
-    desc: "名老中医辨证开方，多味药材慢火熬制浓缩成膏，一勺一冬，调补兼施。",
-    benefit: "调补 · 抗衰 · 慢病管理",
-    cover: img(
-      "Chinese herbal paste preparation, copper pot, dark glossy paste, pharmacist hands, warm light, photorealistic",
-      "square"
-    ),
+    id: "diet-therapy",
+    cover: img("Elegant Chinese medicinal cuisine soup in ceramic bowl, steam rising, photorealistic food photography", "square"),
   },
 ];
 
-export const doctors: TcmDoctor[] = [
+const baseDoctors: BaseTcmDoctor[] = [
   {
-    id: "doc-01",
-    name: "陈守仁",
-    title: "主任中医师 · 国家级名中医",
-    specialty: "脾胃病 / 亚健康调理 / 膏方",
-    years: 42,
-    schedule: "周二 / 周四上午",
-    cover: img(
-      "Senior Chinese medicine doctor portrait, white coat, kind expression, dark background, photorealistic portrait photography",
-      "portrait_4_3"
-    ),
+    id: "dr-wang",
+    years: 40,
+    cover: img("Senior Chinese medicine doctor portrait, white hair, kind expression, traditional clinic background, photorealistic", "portrait_4_3"),
   },
   {
-    id: "doc-02",
-    name: "李青禾",
-    title: "主任医师 · 针灸学科带头人",
-    specialty: "针灸 / 神经康复 / 失眠",
+    id: "dr-li",
     years: 28,
-    schedule: "周一 / 周三 / 周五全天",
-    cover: img(
-      "Female Chinese medicine acupuncture specialist portrait, white coat, soft studio light, photorealistic",
-      "portrait_4_3"
-    ),
+    cover: img("Middle-aged female Chinese medicine doctor portrait, warm smile, modern TCM clinic, photorealistic", "portrait_4_3"),
   },
   {
-    id: "doc-03",
-    name: "周慕白",
-    title: "副主任中医师",
-    specialty: "妇科 / 体质辨识 / 药膳指导",
-    years: 18,
-    schedule: "周二 / 周六全天",
-    cover: img(
-      "Middle aged Chinese medicine doctor portrait, calm expression, dark wood background, photorealistic",
-      "portrait_4_3"
-    ),
-  },
-  {
-    id: "doc-04",
-    name: "赵承志",
-    title: "主任中医师 · 推拿正骨",
-    specialty: "脊柱 / 关节 / 运动康复",
+    id: "dr-chen",
     years: 35,
-    schedule: "周一 / 周三 / 周五全天",
-    cover: img(
-      "Senior Chinese tuina doctor portrait, confident expression, studio lighting, photorealistic",
-      "portrait_4_3"
-    ),
+    cover: img("Chinese medicine acupuncturist portrait, calm expression, treatment room background, photorealistic", "portrait_4_3"),
+  },
+  {
+    id: "dr-zhang",
+    years: 22,
+    cover: img("Young male Chinese medicine doctor portrait, confident, herbal medicine background, photorealistic", "portrait_4_3"),
   },
 ];
 
-export const solarTerms: SolarTerm[] = [
-  { id: "lichun", name: "立春", month: "2 月", tip: "疏肝理气，宜食春芽，晨起梳头 200 下。", herbs: ["柴胡", "白芍", "陈皮"] },
-  { id: "yushui", name: "雨水", month: "2 月", tip: "健脾祛湿，睡前揉腹 100 圈，忌生冷。", herbs: ["茯苓", "薏苡仁", "山药"] },
-  { id: "jingzhe", name: "惊蛰", month: "3 月", tip: "养肝升阳，多食韭菜与枸杞。", herbs: ["枸杞", "菊花", "决明子"] },
-  { id: "chunfen", name: "春分", month: "3 月", tip: "平衡阴阳，踏青远眺，晚睡早起。", herbs: ["百合", "大枣", "蜂蜜"] },
-  { id: "qingming", name: "清明", month: "4 月", tip: "柔肝养肺，菊花枸杞代茶饮。", herbs: ["菊花", "枸杞", "桑叶"] },
-  { id: "guyu", name: "谷雨", month: "4 月", tip: "健脾祛湿，常饮薏米红豆汤。", herbs: ["薏苡仁", "赤小豆", "芡实"] },
-  { id: "lixia", name: "立夏", month: "5 月", tip: "养心安神，多吃红色食物与豆类。", herbs: ["酸枣仁", "桂圆", "红枣"] },
-  { id: "xiaoman", name: "小满", month: "5 月", tip: "清热利湿，午后静坐 15 分钟。", herbs: ["荷叶", "薏苡仁", "绿豆"] },
-  { id: "mangzhong", name: "芒种", month: "6 月", tip: "防暑祛湿，多饮酸梅汤。", herbs: ["乌梅", "山楂", "甘草"] },
-  { id: "xiazhi", name: "夏至", month: "6 月", tip: "养心清暑，子时前入睡。", herbs: ["麦冬", "五味子", "莲子"] },
-  { id: "xiaoshu", name: "小暑", month: "7 月", tip: "健脾化湿，少食冰品，温水泡脚。", herbs: ["生姜", "藿香", "佩兰"] },
-  { id: "dashu", name: "大暑", month: "7 月", tip: "清热解暑，午间小憩，忌大汗淋漓。", herbs: ["金银花", "薄荷", "竹叶"] },
+const baseSolarTerms: BaseSolarTerm[] = [
+  { id: "lichun", month: 2, solarCover: img("Early spring plum blossoms on ancient Chinese garden branch, soft light, photorealistic", "square") },
+  { id: "yushui", month: 2, solarCover: img("Gentle spring rain over rice terraces, misty mountains, photorealistic", "square") },
+  { id: "jingzhe", month: 3, solarCover: img("Awakening insects, first spring thunder, green bamboo shoots, photorealistic", "square") },
+  { id: "chunfen", month: 3, solarCover: img("Spring equinox cherry blossoms, balanced daylight, photorealistic", "square") },
+  { id: "qingming", month: 4, solarCover: img("Qingming festival green tea mountains, light rain, photorealistic", "square") },
+  { id: "guyu", month: 4, solarCover: img("Grain rain, tea leaves with raindrops, fresh green, photorealistic", "square") },
+  { id: "lixia", month: 5, solarCover: img("Beginning of summer lotus pond, warm sunlight, photorealistic", "square") },
+  { id: "xiaoman", month: 5, solarCover: img("Grain full, wheat ears turning golden, photorealistic", "square") },
+  { id: "mangzhong", month: 6, solarCover: img("Mangzhong busy farming, green rice fields, photorealistic", "square") },
+  { id: "xiazhi", month: 6, solarCover: img("Summer solstice, longest day, lotus flowers, photorealistic", "square") },
+  { id: "xiaoshu", month: 7, solarCover: img("Minor heat, sunlit bamboo forest, cicadas, photorealistic", "square") },
+  { id: "dashu", month: 7, solarCover: img("Major heat, lotus leaves under hot sun, photorealistic", "square") },
 ];
 
-export const solarCover = img(
-  "Traditional Chinese solar term calendar with herbs and flowers, calligraphy, soft warm light, top down, photorealistic",
-  "landscape_4_3"
-);
+const tcmLocales: Record<Locale, { therapies: Record<string, LocalizedTcmTherapy>; doctors: Record<string, LocalizedTcmDoctor>; solarTerms: Record<string, LocalizedSolarTerm> }> = {
+  "zh-CN": tcmZhCN,
+  en: tcmEn,
+  ja: tcmJa,
+  ko: tcmKo,
+  ru: tcmRu,
+  ar: tcmAr,
+  es: tcmEs,
+  fr: tcmFr,
+  de: tcmDe,
+  pt: tcmPt,
+};
+
+export function getTcmData(locale: Locale): TcmData {
+  const localized = tcmLocales[locale] ?? tcmLocales["zh-CN"];
+  const therapies = baseTherapies.map((t) => {
+    const loc = localized.therapies[t.id];
+    if (!loc) throw new Error(`Missing therapy localization for ${t.id} in ${locale}`);
+    return { ...t, ...loc };
+  });
+  const doctors = baseDoctors.map((d) => {
+    const loc = localized.doctors[d.id];
+    if (!loc) throw new Error(`Missing doctor localization for ${d.id} in ${locale}`);
+    return { ...d, ...loc };
+  });
+  const solarTerms = baseSolarTerms.map((s) => {
+    const loc = localized.solarTerms[s.id];
+    if (!loc) throw new Error(`Missing solar term localization for ${s.id} in ${locale}`);
+    return { ...s, ...loc };
+  });
+  return { therapies, doctors, solarTerms };
+}

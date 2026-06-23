@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Search,
   Stethoscope,
@@ -15,7 +15,8 @@ import {
   MapPin,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
-import { useT } from "@/i18n/language-hooks";
+import { useLanguage, useT } from "@/i18n/language-hooks";
+import { getTestimonials } from "@/data/testimonials";
 
 const SPECIALTY_KEYS = [
   "oncology",
@@ -37,34 +38,16 @@ const DESTINATION_KEYS = [
   "hangzhou",
 ] as const;
 
-const SPECIALTY_I18N: Record<(typeof SPECIALTY_KEYS)[number], Record<"zh-CN" | "en" | "ja", string>> = {
-  oncology: { "zh-CN": "肿瘤科", en: "Oncology", ja: "腫瘍科" },
-  cardiology: { "zh-CN": "心内科", en: "Cardiology", ja: "循環器科" },
-  orthopedics: { "zh-CN": "骨科", en: "Orthopedics", ja: "整形外科" },
-  neurology: { "zh-CN": "神经科", en: "Neurology", ja: "神経科" },
-  reproductive: { "zh-CN": "辅助生殖", en: "Reproductive Medicine", ja: "生殖医療" },
-  tcm: { "zh-CN": "中医康养", en: "TCM Wellness", ja: "中医養生" },
-  cosmetic: { "zh-CN": "医美整形", en: "Cosmetic Surgery", ja: "美容外科" },
-  dental: { "zh-CN": "种植牙", en: "Dental Implants", ja: "インプラント歯科" },
-};
-
-const DESTINATION_I18N: Record<(typeof DESTINATION_KEYS)[number], Record<"zh-CN" | "en" | "ja", string>> = {
-  chongqing: { "zh-CN": "重庆", en: "Chongqing", ja: "重慶" },
-  beijing: { "zh-CN": "北京", en: "Beijing", ja: "北京" },
-  shanghai: { "zh-CN": "上海", en: "Shanghai", ja: "上海" },
-  guangzhou: { "zh-CN": "广州", en: "Guangzhou", ja: "広州" },
-  shenzhen: { "zh-CN": "深圳", en: "Shenzhen", ja: "深圳" },
-  hangzhou: { "zh-CN": "杭州", en: "Hangzhou", ja: "杭州" },
-};
-
 const PILLAR_ICONS = [Stethoscope, Building2, Plane, ScrollText];
 const PROCESS_ICONS = [Search, ScrollText, ShieldCheck, Plane, Stethoscope, Calendar];
 
 export default function Home() {
+  const { locale } = useLanguage();
   const t = useT();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [searchOpen, setSearchOpen] = useState(false);
-  const locale = t.nav.home === "首页" ? "zh-CN" : t.nav.home === "ホーム" ? "ja" : "en";
+
+  const testimonials = useMemo(() => getTestimonials(locale), [locale]);
 
   return (
     <div className="bg-white text-slate-900 font-sans">
@@ -117,7 +100,7 @@ export default function Home() {
                     <div className="relative mt-1">
                       <select className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 pr-9 text-sm focus:outline-none focus:border-teal-500">
                         {SPECIALTY_KEYS.map((k) => (
-                          <option key={k}>{SPECIALTY_I18N[k][locale]}</option>
+                          <option key={k}>{t.data.departments[k]}</option>
                         ))}
                       </select>
                       <ChevronDown
@@ -133,7 +116,7 @@ export default function Home() {
                     <div className="relative mt-1">
                       <select className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 pr-9 text-sm focus:outline-none focus:border-teal-500">
                         {DESTINATION_KEYS.map((k) => (
-                          <option key={k}>{DESTINATION_I18N[k][locale]}</option>
+                          <option key={k}>{t.data.cities[k]}</option>
                         ))}
                       </select>
                       <ChevronDown
@@ -343,18 +326,18 @@ export default function Home() {
             </div>
           </Reveal>
           <div className="mt-12 grid md:grid-cols-3 gap-6">
-            {t.home.voices.map((v, i) => (
-              <Reveal key={v.country} delay={i * 80}>
+            {testimonials.slice(0, 3).map((v, i) => (
+              <Reveal key={v.id} delay={i * 80}>
                 <div className="bg-white p-7 rounded-2xl border border-slate-100 h-full flex flex-col">
                   <div className="flex gap-1 text-amber-400">
                     {Array.from({ length: 5 }).map((_, k) => (
                       <Star key={k} size={16} fill="currentColor" stroke="none" />
                     ))}
                   </div>
-                  <p className="mt-4 text-slate-700 leading-relaxed text-sm">"{v.text}"</p>
+                  <p className="mt-4 text-slate-700 leading-relaxed text-sm">“{v.quote}”</p>
                   <div className="mt-auto pt-5 border-t border-slate-100">
                     <div className="font-semibold text-slate-900">{v.name}</div>
-                    <div className="text-xs text-slate-500 mt-0.5">{v.country}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">{v.city}</div>
                   </div>
                 </div>
               </Reveal>
@@ -423,10 +406,10 @@ export default function Home() {
                 {t.home.finalBtn} <ArrowRight size={18} />
               </Link>
               <a
-                href="tel:+864006261911"
+                href={`tel:${t.contact.phone.replace(/[^0-9+]/g, "")}`}
                 className="inline-flex items-center gap-2 border border-white/20 hover:border-teal-300 text-white px-7 py-3.5 rounded-full font-semibold transition"
               >
-                <Phone size={18} /> 400 · 626 · 1911
+                <Phone size={18} /> {t.contact.phone}
               </a>
             </div>
           </Reveal>

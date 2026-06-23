@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
-import { useT } from "@/i18n/language-hooks";
+import { useLanguage, useT } from "@/i18n/language-hooks";
+import { getPartners } from "@/data/partners";
 
 export default function Footer() {
+  const { locale } = useLanguage();
   const t = useT();
+  const partners = getPartners(locale);
   const year = new Date().getFullYear();
   return (
     <footer className="bg-midnight-950 text-slate-300 relative overflow-hidden">
@@ -88,17 +91,17 @@ export default function Footer() {
           <ul className="space-y-3 text-sm text-slate-400">
             <li className="flex items-start gap-2">
               <Phone size={14} className="mt-1 text-teal-400" />
-              <a href="tel:+864006261911" className="hover:text-teal-300">400 · 626 · 1911</a>
+              <a href="tel:+864006261911" className="hover:text-teal-300">{t.contact.phone}</a>
             </li>
             <li className="flex items-start gap-2">
               <Mail size={14} className="mt-1 text-teal-400" />
               <a href="mailto:concierge@yujian-wellness.cn" className="hover:text-teal-300">
-                concierge@yujian-wellness.cn
+                {t.contact.email}
               </a>
             </li>
             <li className="flex items-start gap-2">
               <MapPin size={14} className="mt-1 text-teal-400" />
-              <span>重庆 · 渝中 · 解放碑 CBD</span>
+              <span>{t.contact.city}</span>
             </li>
           </ul>
         </div>

@@ -3,32 +3,14 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Check, Filter, Mountain, X, MapPin, Sun } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import InquiryForm from "@/components/InquiryForm";
-import { routes, type RouteTheme } from "@/data/routes";
+import { getRoutes, routeThemeKeys, type RouteThemeKey } from "@/data/routes";
 import { img } from "@/utils/format";
-import { useT } from "@/i18n/language-hooks";
+import { useLanguage, useT } from "@/i18n/language-hooks";
 
 const pageHero = img(
   "Hiking trail winding through misty Chinese mountains with stone steps, pine trees, dawn, cinematic, photorealistic",
   "landscape_16_9"
 );
-
-const THEME_KEYS: Record<RouteTheme, "hotSpring" | "gorge" | "tcm" | "trail" | "oldTown" | "aesthetic"> = {
-  温泉疗愈: "hotSpring",
-  江峡养心: "gorge",
-  中医世家: "tcm",
-  古道徒步: "trail",
-  古镇静修: "oldTown",
-  都市医美: "aesthetic",
-};
-
-const THEMES_ALL: RouteTheme[] = [
-  "温泉疗愈",
-  "江峡养心",
-  "中医世家",
-  "古道徒步",
-  "古镇静修",
-  "都市医美",
-];
 
 type BucketId = "all" | "short" | "mid" | "long";
 
@@ -40,13 +22,16 @@ const BUCKET_MATCHERS: Record<BucketId, (d: number) => boolean> = {
 };
 
 export default function Routes() {
+  const { locale } = useLanguage();
   const t = useT();
-  const [theme, setTheme] = useState<RouteTheme | "all">("all");
+  const routes = useMemo(() => getRoutes(locale), [locale]);
+  const [theme, setTheme] = useState<RouteThemeKey | "all">("all");
   const [bucket, setBucket] = useState<BucketId>("all");
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [showCompare, setShowCompare] = useState(false);
 
-  const labelTheme = (th: RouteTheme) => t.routesPageV2.themes[THEME_KEYS[th]];
+  const labelTheme = (th: RouteThemeKey) => t.data.themes[th];
+  const labelIntensity = (level: "light" | "moderate" | "deep") => t.data.intensity[level];
 
   const dayBuckets: { id: BucketId; label: string }[] = useMemo(
     () => [
@@ -64,11 +49,11 @@ export default function Routes() {
       const bucketOk = BUCKET_MATCHERS[bucket](r.days);
       return themeOk && bucketOk;
     });
-  }, [theme, bucket]);
+  }, [routes, theme, bucket]);
 
   const compareItems = useMemo(
     () => routes.filter((r) => compareIds.includes(r.id)),
-    [compareIds]
+    [routes, compareIds]
   );
 
   function toggleCompare(id: string) {
@@ -117,7 +102,7 @@ export default function Routes() {
             <Pill active={theme === "all"} onClick={() => setTheme("all")}>
               {t.routesPageV2.allThemes}
             </Pill>
-            {THEMES_ALL.map((th) => (
+            {routeThemeKeys.map((th) => (
               <Pill key={th} active={theme === th} onClick={() => setTheme(th)}>
                 {labelTheme(th)}
               </Pill>
@@ -211,7 +196,7 @@ export default function Routes() {
                     <div className="mt-5 pt-4 border-t border-slate-100 flex items-end justify-between">
                       <div className="text-xs text-slate-500 flex flex-col gap-1">
                         <span className="flex items-center gap-1.5">
-                          <MapPin size={11} /> {r.days}{t.routesPageV2.daysUnit} · {r.nights}{t.routesPageV2.nightsUnit} · {r.intensity}
+                          <MapPin size={11} /> {r.days}{t.routesPageV2.daysUnit} · {r.nights}{t.routesPageV2.nightsUnit} · {labelIntensity(r.intensity)}
                         </span>
                         <span className="flex items-center gap-1.5">
                           <Sun size={11} /> {t.routesPageV2.bestLabel}: {r.bestSeason}
@@ -282,7 +267,7 @@ export default function Routes() {
                 </thead>
                 <tbody className="text-sm">
                   <Row label={t.routesPageV2.fieldDuration} items={compareItems.map((c) => `${c.days}${t.routesPageV2.daysUnit} ${c.nights}${t.routesPageV2.nightsUnit}`)} />
-                  <Row label={t.routesPageV2.fieldIntensity} items={compareItems.map((c) => c.intensity)} />
+                  <Row label={t.routesPageV2.fieldIntensity} items={compareItems.map((c) => labelIntensity(c.intensity))} />
                   <Row label={t.routesPageV2.fieldSeason} items={compareItems.map((c) => c.bestSeason)} />
                   <Row label={t.routesPageV2.fieldPrice} items={compareItems.map((c) => `¥${c.priceFrom.toLocaleString()}`)} />
                   <Row label={t.routesPageV2.fieldHighlight} items={compareItems.map((c) => c.highlight)} />

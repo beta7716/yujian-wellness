@@ -40,7 +40,7 @@ export default function LanguageSwitcher() {
         >
           <div className="px-4 py-3 border-b border-slate-100 sticky top-0 bg-white">
             <div className="text-[10px] tracking-[0.4em] uppercase text-slate-400 font-display">
-              {t.footer.newsletterLabel === "邮件订阅" ? "Language" : t.footer.nav}
+              {locale === "zh-CN" ? "Language" : t.footer.nav}
             </div>
           </div>
           <ul className="py-1">
@@ -52,7 +52,11 @@ export default function LanguageSwitcher() {
                     role="option"
                     aria-selected={active}
                     onClick={() => {
-                      setLocale(l.code);
+                      const next = l.code;
+                      setLocale(next);
+                      document.documentElement.lang = next === "zh-CN" ? "zh" : next;
+                      if (next === "zh-CN") window.scrollTo({ top: 0, behavior: "auto" });
+                      else window.scrollTo({ top: 0, behavior: "smooth" });
                       setOpen(false);
                     }}
                     className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors ${

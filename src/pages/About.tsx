@@ -1,9 +1,9 @@
 import { ArrowRight, Compass, Heart, Mountain, ShieldCheck, Sparkles } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import InquiryForm from "@/components/InquiryForm";
-import { partners } from "@/data/testimonials";
+import { getPartners } from "@/data/partners";
 import { img } from "@/utils/format";
-import { useLocale, useT } from "@/i18n/language-hooks";
+import { useLanguage, useT } from "@/i18n/language-hooks";
 
 const storyBg = img(
   "Aerial view of misty Chongqing mountain city at dawn, Yangtze river, cinematic warm light, photorealistic",
@@ -14,65 +14,7 @@ const officeBg = img(
   "landscape_4_3"
 );
 
-const milestones = [
-  { year: "2014", titleKey: 0, descKey: 0 },
-  { year: "2017", titleKey: 1, descKey: 1 },
-  { year: "2019", titleKey: 2, descKey: 2 },
-  { year: "2022", titleKey: 3, descKey: 3 },
-  { year: "2025", titleKey: 4, descKey: 4 },
-];
-
-const milestoneData = {
-  "zh-CN": [
-    { title: "品牌成立", desc: "在重庆渝中区成立渝见康养品牌。" },
-    { title: "三甲联盟", desc: "与重医附一院、西南医院签署战略合作。" },
-    { title: "名医顾问团", desc: "组建 12 人国家级名中医顾问团。" },
-    { title: "海外拓展", desc: "与瑞士鹰阁医疗、日本藤田观光开展合作。" },
-    { title: "服务 12,000+", desc: "累计服务国内外旅客 12,000 余人次。" },
-  ],
-  en: [
-    { title: "Founded", desc: "Yujian Wellness was founded in Yuzhong, Chongqing." },
-    { title: "Tier-A alliance", desc: "Strategic partnerships with CQMU Affiliated Hospital 1 and Southwest Hospital." },
-    { title: "Master advisory", desc: "Assembled a 12-member national-grade TCM master advisory." },
-    { title: "Global expansion", desc: "Partnerships with Switzerland's Gleneagles and Japan's Fujita Kanko." },
-    { title: "12,000+ guests", desc: "Cumulatively served more than 12,000 domestic and international guests." },
-  ],
-  ja: [
-    { title: "創業", desc: "重慶渝中区にて渝見康養ブランドを設立。" },
-    { title: "三甲連携", desc: "重医附一院・西南医院と戦略提携を締結。" },
-    { title: "名医顧問団", desc: "国家級名中医12名による顧問団を結成。" },
-    { title: "海外展開", desc: "スイスのグレンイーグルス、日本の藤田観光と提携。" },
-    { title: "12,000名以上", desc: "累計国内外ゲスト12,000名以上をお迎え。" },
-  ],
-};
-
-const values = [
-  { icon: Mountain, titleKey: 0, descKey: 0, cn: "山" },
-  { icon: Heart, titleKey: 1, descKey: 1, cn: "心" },
-  { icon: ShieldCheck, titleKey: 2, descKey: 2, cn: "盾" },
-  { icon: Sparkles, titleKey: 3, descKey: 3, cn: "韵" },
-];
-
-const valueData = {
-  "zh-CN": [
-    { title: "本土深耕", desc: "10 年深耕重庆，把山城资源吃透。" },
-    { title: "医者之心", desc: "我们不是旅行社，而是健康管家。" },
-    { title: "安全第一", desc: "三甲医院绿色通道，全流程保障。" },
-    { title: "东方雅韵", desc: "把康养升华为一次美学的相遇。" },
-  ],
-  en: [
-    { title: "Local depth", desc: "Ten years inside Chongqing, with the city's resources mapped to the bone." },
-    { title: "Clinician's heart", desc: "We're not a travel agency — we're wellness butlers." },
-    { title: "Safety first", desc: "Tier-A hospital green channel, end-to-end coverage." },
-    { title: "Eastern elegance", desc: "Wellness elevated into an aesthetic encounter." },
-  ],
-  ja: [
-    { title: "地域深耕", desc: "10年重慶に根ざし、山街の資源を深く把握。" },
-    { title: "医者の心", desc: "旅行会社ではなく、健康管家（バトラー）です。" },
-    { title: "安全第一", desc: "三甲病院グリーン通道、エンドtoエンド保障。" },
-    { title: "東洋の雅", desc: "養生を美学的な出会いへと昇華。" },
-  ],
-};
+const VALUE_ICONS = [Mountain, Heart, ShieldCheck, Sparkles];
 
 const aboutStats = [
   { v: "11", k: 0 },
@@ -82,10 +24,32 @@ const aboutStats = [
 ];
 
 export default function About() {
+  const { locale } = useLanguage();
   const t = useT();
-  const locale = useLocale();
-  const ms = milestoneData[locale as keyof typeof milestoneData] ?? milestoneData["zh-CN"];
-  const vs = valueData[locale as keyof typeof valueData] ?? valueData["zh-CN"];
+  const partners = getPartners(locale);
+
+  const contactItems = [
+    {
+      seal: t.aboutPage.contactSeals.phone,
+      type: t.aboutPage.contactItems[0].type,
+      value: t.contact.phone,
+      href: `tel:${t.contact.phone.replace(/[^0-9+]/g, "")}`,
+      hint: t.aboutPage.contactItems[0].hint,
+    },
+    {
+      seal: t.aboutPage.contactSeals.email,
+      type: t.aboutPage.contactItems[1].type,
+      value: t.contact.email,
+      href: `mailto:${t.contact.email}`,
+      hint: t.aboutPage.contactItems[1].hint,
+    },
+    {
+      seal: t.aboutPage.contactSeals.address,
+      type: t.aboutPage.contactItems[2].type,
+      value: t.contact.city,
+      hint: t.contact.address,
+    },
+  ];
 
   return (
     <>
@@ -169,18 +133,16 @@ export default function About() {
             </div>
           </Reveal>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {values.map((v, i) => {
-              const Icon = v.icon;
-              const data = vs[i];
+            {t.aboutPage.values.map((v, i) => {
+              const Icon = VALUE_ICONS[i] ?? Mountain;
               return (
-                <Reveal key={data.title} delay={i * 100}>
+                <Reveal key={v.title} delay={i * 100}>
                   <div className="bg-smoke-50 border border-ink-100 p-8 h-full hover:border-ink-800 transition">
-                    <div className="flex items-center justify-between">
-                      <div className="seal seal-sm">{v.cn}</div>
+                    <div className="flex items-center justify-end">
                       <Icon size={18} className="text-cinnabar" />
                     </div>
-                    <h3 className="mt-6 font-serif text-2xl text-ink-800">{data.title}</h3>
-                    <p className="mt-3 text-sm text-ink-500 leading-relaxed">{data.desc}</p>
+                    <h3 className="mt-6 font-serif text-2xl text-ink-800">{v.title}</h3>
+                    <p className="mt-3 text-sm text-ink-500 leading-relaxed">{v.desc}</p>
                   </div>
                 </Reveal>
               );
@@ -203,31 +165,28 @@ export default function About() {
           <div className="relative">
             <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-ink-200" aria-hidden />
             <div className="space-y-12">
-              {milestones.map((m, i) => {
-                const data = ms[i];
-                return (
-                  <Reveal key={m.year} delay={i * 100}>
-                    <div
-                      className={`grid md:grid-cols-2 gap-6 md:gap-12 items-start ${
-                        i % 2 === 0 ? "" : "md:[&>*:first-child]:order-2"
-                      }`}
-                    >
-                      <div className={`pl-8 md:pl-0 ${i % 2 === 0 ? "md:text-right md:pr-12" : "md:pl-12"}`}>
-                        <div className="num-plate text-4xl md:text-5xl text-cinnabar">{m.year}</div>
-                        <h3 className="mt-2 font-serif text-2xl text-ink-800">{data.title}</h3>
-                        <p className="mt-2 text-ink-500 text-sm leading-relaxed max-w-sm md:ml-auto md:mr-0">
-                          {data.desc}
-                        </p>
-                      </div>
-                      <div className="hidden md:block" />
-                      <span
-                        className="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 top-2 w-3 h-3 rounded-full bg-cinnabar"
-                        aria-hidden
-                      />
+              {t.aboutPage.milestones.map((m, i) => (
+                <Reveal key={m.year} delay={i * 100}>
+                  <div
+                    className={`grid md:grid-cols-2 gap-6 md:gap-12 items-start ${
+                      i % 2 === 0 ? "" : "md:[&>*:first-child]:order-2"
+                    }`}
+                  >
+                    <div className={`pl-8 md:pl-0 ${i % 2 === 0 ? "md:text-right md:pr-12" : "md:pl-12"}`}>
+                      <div className="num-plate text-4xl md:text-5xl text-cinnabar">{m.year}</div>
+                      <h3 className="mt-2 font-serif text-2xl text-ink-800">{m.title}</h3>
+                      <p className="mt-2 text-ink-500 text-sm leading-relaxed max-w-sm md:ml-auto md:mr-0">
+                        {m.desc}
+                      </p>
                     </div>
-                  </Reveal>
-                );
-              })}
+                    <div className="hidden md:block" />
+                    <span
+                      className="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 top-2 w-3 h-3 rounded-full bg-cinnabar"
+                      aria-hidden
+                    />
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </div>
@@ -275,28 +234,25 @@ export default function About() {
                   {t.aboutPage.contactSub}
                 </p>
                 <ul className="mt-10 space-y-5 text-sm text-ink-600">
-                  <li className="flex items-start gap-4">
-                    <div className="seal seal-sm">话</div>
-                    <div>
-                      <div className="text-[11px] tracking-[0.3em] uppercase text-ink-500 font-display">{t.aboutPage.contactItems[0].type}</div>
-                      <div className="font-serif text-lg text-ink-800 mt-1">{t.aboutPage.contactItems[0].ph}</div>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="seal seal-sm">邮</div>
-                    <div>
-                      <div className="text-[11px] tracking-[0.3em] uppercase text-ink-500 font-display">{t.aboutPage.contactItems[1].type}</div>
-                      <div className="font-serif text-lg text-ink-800 mt-1">{t.aboutPage.contactItems[1].ph}</div>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="seal seal-sm">地</div>
-                    <div>
-                      <div className="text-[11px] tracking-[0.3em] uppercase text-ink-500 font-display">{t.aboutPage.contactItems[2].type}</div>
-                      <div className="font-serif text-lg text-ink-800 mt-1">{t.aboutPage.contactItems[2].ph}</div>
-                      <div className="text-xs text-ink-500 mt-1">{t.aboutPage.contactItems[2].hint}</div>
-                    </div>
-                  </li>
+                  {contactItems.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-4">
+                      <div className="seal seal-sm">{item.seal}</div>
+                      <div>
+                        <div className="text-[11px] tracking-[0.3em] uppercase text-ink-500 font-display">{item.type}</div>
+                        {item.href ? (
+                          <a
+                            href={item.href}
+                            className="font-serif text-lg text-ink-800 mt-1 block hover:text-cinnabar transition"
+                          >
+                            {item.value}
+                          </a>
+                        ) : (
+                          <div className="font-serif text-lg text-ink-800 mt-1">{item.value}</div>
+                        )}
+                        {item.hint ? <div className="text-xs text-ink-500 mt-1">{item.hint}</div> : null}
+                      </div>
+                    </li>
+                  ))}
                 </ul>
                 <div className="mt-10 flex items-center gap-3 text-[11px] tracking-[0.3em] uppercase text-ink-500 font-display">
                   <Compass size={14} className="text-cinnabar" />
@@ -324,8 +280,7 @@ export default function About() {
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-ink-800/40 to-transparent" />
               <div className="absolute left-8 bottom-8 text-smoke-50">
-                <div className="text-[11px] tracking-[0.3em] uppercase font-display text-smoke-200/80">Salon</div>
-                <div className="font-serif text-2xl mt-1">{t.aboutPage.salonTitle}</div>
+                <div className="font-serif text-2xl">{t.aboutPage.salonTitle}</div>
                 <div className="text-sm text-smoke-200/80 mt-1 flex items-center gap-2">
                   {t.aboutPage.salonLocation} <ArrowRight size={14} />
                 </div>

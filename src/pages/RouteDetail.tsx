@@ -2,12 +2,15 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Calendar, Compass, MapPin, Sparkles, Sun } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import InquiryForm from "@/components/InquiryForm";
-import { routes } from "@/data/routes";
-import { useT } from "@/i18n/language-hooks";
+import { getRoutes, type RouteThemeKey } from "@/data/routes";
+import { useLanguage, useT } from "@/i18n/language-hooks";
 
 export default function RouteDetail() {
+  const { locale } = useLanguage();
   const t = useT();
   const { id } = useParams<{ id: string }>();
+  const routes = getRoutes(locale);
+
   // Support both id (e.g. "hot-spring-healing") and code (e.g. "R · 01" or "01")
   const route = routes.find(
     (r) => r.id === id || r.code === id || r.code.replace(/^R\s*·\s*/, "") === id
@@ -23,6 +26,8 @@ export default function RouteDetail() {
   }
 
   const others = routes.filter((r) => r.id !== route.id).slice(0, 3);
+  const labelTheme = (th: RouteThemeKey) => t.data.themes[th];
+  const labelIntensity = (level: "light" | "moderate" | "deep") => t.data.intensity[level];
 
   return (
     <>
@@ -40,9 +45,9 @@ export default function RouteDetail() {
               <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.4em] font-display text-smoke-200/80">
                 <span>{route.code}</span>
                 <span className="h-px w-8 bg-smoke-200/50" />
-                <span>{route.theme}</span>
+                <span>{labelTheme(route.theme)}</span>
                 <span className="h-px w-8 bg-smoke-200/50" />
-                <span>{route.intensity}</span>
+                <span>{labelIntensity(route.intensity)}</span>
               </div>
               <h1 className="mt-6 font-serif text-4xl md:text-6xl leading-tight max-w-4xl">{route.title}</h1>
               <div className="mt-3 text-sm tracking-[0.3em] uppercase font-display text-smoke-200/80">
@@ -76,8 +81,8 @@ export default function RouteDetail() {
               <ul className="space-y-4 text-sm">
                 <InfoRow icon={Calendar} label={t.routeDetail.field.duration} value={`${route.days} ${t.routesPage.daysUnit} ${route.nights} ${t.routesPage.nightsUnit}`} />
                 <InfoRow icon={Sun} label={t.routeDetail.field.season} value={route.bestSeason} />
-                <InfoRow icon={Compass} label={t.routeDetail.field.intensity} value={route.intensity} />
-                <InfoRow icon={MapPin} label={t.routeDetail.field.destination} value="Chongqing" />
+                <InfoRow icon={Compass} label={t.routeDetail.field.intensity} value={labelIntensity(route.intensity)} />
+                <InfoRow icon={MapPin} label={t.routeDetail.field.destination} value={t.data.cities.chongqing} />
               </ul>
               <div>
                 <div className="text-[11px] uppercase tracking-[0.3em] text-ink-500 font-display mb-3">{t.routeDetail.topicTags}</div>
@@ -101,7 +106,7 @@ export default function RouteDetail() {
                 </div>
                 <h2 className="mt-4 font-serif text-3xl md:text-4xl text-ink-800 leading-tight">{route.highlight}</h2>
                 <p className="mt-6 text-ink-500 text-lg leading-relaxed">
-                  {route.days} {t.routesPage.daysUnit} {route.nights} {t.routesPage.nightsUnit} · {route.theme}
+                  {route.days} {t.routesPage.daysUnit} {route.nights} {t.routesPage.nightsUnit} · {labelTheme(route.theme)}
                 </p>
               </div>
             </Reveal>
@@ -156,7 +161,7 @@ export default function RouteDetail() {
                   {t.routeDetail.curatorQuote}
                 </p>
                 <div className="mt-6 flex items-center gap-3">
-                  <div className="seal seal-sm">主</div>
+                  <div className="seal seal-sm">{t.routeDetail.curatorSeal}</div>
                   <div>
                     <div className="font-serif text-ink-800">{t.routeDetail.curatorName}</div>
                     <div className="text-[11px] tracking-[0.3em] uppercase text-ink-400 font-display">
@@ -204,7 +209,7 @@ export default function RouteDetail() {
                 </div>
                 <div className="p-5">
                   <div className="text-[10px] tracking-[0.3em] uppercase text-ink-400 font-display">
-                    {o.theme} · {o.days} {t.routesPage.daysUnit}
+                    {labelTheme(o.theme)} · {o.days} {t.routesPage.daysUnit}
                   </div>
                   <div className="mt-2 font-serif text-lg text-ink-800">{o.title}</div>
                 </div>
